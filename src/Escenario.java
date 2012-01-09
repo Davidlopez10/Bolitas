@@ -21,7 +21,10 @@ public class Escenario extends JComponent {
 	
 	private Color colorFondo;
 	
-	public Escenario(int ancho, int alto, int maxEntidades, Color colorFondo) {
+	// Determina la velocidad de la animacion (un valor más alto equivale a una animación más rápida)
+	private double dt;
+	
+	public Escenario(int ancho, int alto, int maxEntidades, Color colorFondo, double dt) {
 		this.alto=alto;
 		this.ancho=ancho;
 		this.numEntidades=0;
@@ -29,6 +32,8 @@ public class Escenario extends JComponent {
 		this.listaEntidades = new Entidad[maxEntidades];
 		
 		this.colorFondo = colorFondo;
+		
+		this.dt = dt;
 		
 		setPreferredSize(new Dimension(ancho, alto));
 	}
@@ -47,6 +52,14 @@ public class Escenario extends JComponent {
 	
 	public int getMaxEntidades() {
 		return maxEntidades;
+	}
+	
+	public double getVelocidad() {
+		return dt;
+	}
+
+	public void setVelocidad(double dt) {
+		this.dt = dt;
 	}
 	
 	public boolean insertarEntidad(Entidad ent) {
@@ -122,15 +135,15 @@ public class Escenario extends JComponent {
 	
 	public void accion() {
 		System.out.println("He entrado en accion");
-		float dt;
 		while (true) {
 			System.out.println(listaEntidades[0].getPosicion());
-			dt=1/100f;
 			calculaFisica(dt);
 			try {
 				dibuja();
-			}
-			catch(Exception e) {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

@@ -14,7 +14,7 @@ public class Main {
 	
 	public static void main(String args[]) {
 		
-		int numPelotas = 2;
+		int numPelotas = 20;
 		double radioPelotas = 25;
 		
 		// Creamos la ventana.
@@ -27,7 +27,7 @@ public class Main {
 		ventana.setResizable(false);
 		
 		// Creamos un escenario.
-		Escenario escenario = new Escenario(ANCHO,ALTO, numPelotas, Color.BLACK);
+		Escenario escenario = new Escenario(ANCHO, ALTO, numPelotas, Color.BLACK, 0.1);
 		
 		// Añadimos dicho escenario a la ventana y terminamos de crearla.
 		ventana.getContentPane().add(escenario);
