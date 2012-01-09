@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 public class Main {
 	public static void main(String args[]) {
-		int numPelotas = 20;
+		int numPelotas = 2;
 		double radioPelotas = 25;
 		JFrame ventana = new JFrame("Escenario");
 		ventana.addWindowListener(new WindowAdapter() {
@@ -23,8 +23,8 @@ public class Main {
 		
 		Vector posiciones[] = new Vector[numPelotas];
 		Vector posicion = null;
-		int numPelotasAgregadas = 0;
-		boolean colisiona;
+		//int numPelotasAgregadas = 0;
+		//boolean colisiona;
 		
 		// calculamos posciiones
 		for (int i=0;i<numPelotas;i++) {
@@ -53,7 +53,7 @@ public class Main {
 		
 		// Spawneamos las boals
 		for (int i=0;i<numPelotas;i++) {		
-			escenario.insertarEntidad(new Pelota(radioPelotas, posiciones[i], new Vector(20*Math.random(),5*Math.random()), new Vector(5*Math.random(),10), Color.PINK));
+			escenario.insertarEntidad(new Pelota(radioPelotas, posiciones[i], new Vector(20*Math.random(),5*Math.random()), new Vector(0,0), Color.PINK));
 		}
 		escenario.accion();
 	}

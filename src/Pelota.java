@@ -38,14 +38,14 @@ public class Pelota extends Entidad {
 	}
 	
 	public boolean hayColisionX(int limite1, int limite2) {
-		if (posicion.x - radio  < limite1 || posicion.x + radio > limite2)
+		if (posicion.x - radio < limite1 || posicion.x > limite2)
 			return true;
 		else
 			return false;
 	}
 	
 	public boolean hayColisionY(int limite1, int limite2) {
-		if (posicion.y - radio  < limite1 || posicion.y + radio > limite2)
+		if (posicion.y - radio  < limite1 || posicion.y > limite2)
 			return true;
 		else
 			return false;
