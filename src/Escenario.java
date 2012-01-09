@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
+import Entidades.Entidad;
+
 
 
 public class Escenario extends JComponent {
@@ -19,7 +21,7 @@ public class Escenario extends JComponent {
 	
 	private Color colorFondo;
 	
-	public Escenario(int alto, int ancho, int maxEntidades, Color colorFondo) {
+	public Escenario(int ancho, int alto, int maxEntidades, Color colorFondo) {
 		this.alto=alto;
 		this.ancho=ancho;
 		this.numEntidades=0;

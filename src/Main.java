@@ -3,11 +3,21 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
+import Entidades.Pelota;
+import Mates.Vector;
+
 
 public class Main {
+	
+	static final int ANCHO = 800;
+	static final int ALTO  = 600;
+	
 	public static void main(String args[]) {
+		
 		int numPelotas = 2;
 		double radioPelotas = 25;
+		
+		// Creamos la ventana.
 		JFrame ventana = new JFrame("Escenario");
 		ventana.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -15,46 +25,20 @@ public class Main {
 			}
 		});
 		ventana.setResizable(false);
-		Escenario escenario = new Escenario(600,800, numPelotas, Color.BLACK);
+		
+		// Creamos un escenario.
+		Escenario escenario = new Escenario(ANCHO,ALTO, numPelotas, Color.BLACK);
+		
+		// Añadimos dicho escenario a la ventana y terminamos de crearla.
 		ventana.getContentPane().add(escenario);
 		ventana.pack();
 		ventana.setVisible(true);
 		
+		// Introducimos las bolas en el escenario.
+		for (int i=0;i<numPelotas;i++) 		
+			escenario.insertarEntidad(new Pelota(radioPelotas, Vector.getRandomVector(ANCHO, ALTO), new Vector(20*Math.random(),5*Math.random()), new Vector(0,0), Color.PINK));
 		
-		Vector posiciones[] = new Vector[numPelotas];
-		Vector posicion = null;
-		//int numPelotasAgregadas = 0;
-		//boolean colisiona;
-		
-		// calculamos posciiones
-		for (int i=0;i<numPelotas;i++) {
-			/*
-			colisiona = false;
-			
-			do {*/
-			posicion = Vector.getRandomVector(800,600);
-			
-			/*for (int j=0;j<i;j++)
-				if (posiciones[j].distanciaA(posicion) < radioPelotas ||
-					posicion.x - radioPelotas < 0 ||
-					posicion.x + radioPelotas > 600 ||
-					posicion.y - radioPelotas < 0 ||
-					posicion.y + radioPelotas > 800) {
-					
-						colisiona = true;
-				
-				}
-			} while (colisiona);*/
-				
-			posiciones[i]=posicion;
-			
-			
-		}
-		
-		// Spawneamos las boals
-		for (int i=0;i<numPelotas;i++) {		
-			escenario.insertarEntidad(new Pelota(radioPelotas, posiciones[i], new Vector(20*Math.random(),5*Math.random()), new Vector(0,0), Color.PINK));
-		}
+		// Comenzamos la animación.
 		escenario.accion();
 	}
 }
