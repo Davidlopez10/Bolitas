@@ -3,7 +3,6 @@ package Mates;
 import Exception.DimensionNoValidaException;
 
 
-// TODO: Agregar métodos entre vectores y matrices
 public class Matriz {
 	
 	private double matriz[][]; 
@@ -57,7 +56,7 @@ public class Matriz {
 		return columnas;
 	}
 	
-	public double get(int i, int j) {
+	public double get(int i, int j) throws IndexOutOfBoundsException {
 		return matriz[i][j];
 	}
 	
