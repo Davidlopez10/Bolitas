@@ -1,6 +1,8 @@
 package Entidades;
 import java.awt.Color;
 import java.awt.Graphics;
+
+import Exception.DimensionNoValidaException;
 import Mates.Vector;
 
 
@@ -8,7 +10,7 @@ public class Pelota extends Entidad {
 	
 	private double radio;
 	
-	public Pelota(double radio, Vector posicion, Vector velocidad, Vector aceleracion,Color color) {
+	public Pelota(double radio, Vector posicion, Vector velocidad, Vector aceleracion,Color color) throws DimensionNoValidaException {
 		super(posicion,velocidad,aceleracion,color);
 		this.radio=radio;
 	}
@@ -23,34 +25,41 @@ public class Pelota extends Entidad {
 
 	public void pintar(Graphics g) {
 		g.setColor(color);
-		g.fillOval((int) (posicion.x - radio), (int) (posicion.y - radio), (int) radio, (int) radio);
-	}
-	
-	public boolean hayColision(Entidad ent) {
-		if (ent instanceof Pelota) {
-																
-			if ( ((Pelota) ent).getRadio() + this.getRadio() > 2*this.getPosicion().distanciaA(ent.getPosicion())) {
-				return true;
-			}
-			else {
-				return false;
-			}
+		try {
+			g.fillOval((int) Math.round(posicion.getX() - radio),(int) Math.round(posicion.getY() - radio), 2 * (int) Math.round(radio), 2 * (int) Math.round(radio));
+		} catch (DimensionNoValidaException e) {
+			// No debería pasar nunca ya que comprobamos al contruir la Entidad
+			e.printStackTrace();
 		}
-		return false;
 	}
 	
 	public boolean hayColisionX(int limite1, int limite2) {
-		if (posicion.x - radio < limite1 || posicion.x > limite2)
-			return true;
-		else
+		try {
+			if (posicion.getX() - radio < limite1 || posicion.getX() + radio > limite2)
+				return true;
+			else
+				return false;
+		} catch (DimensionNoValidaException e) {
+			// No debería pasar nunca ya que comprobamos al contruir la Entidad
+			e.printStackTrace();
 			return false;
+		}
 	}
 	
 	public boolean hayColisionY(int limite1, int limite2) {
-		if (posicion.y - radio  < limite1 || posicion.y > limite2)
-			return true;
-		else
+		try {
+			if (posicion.getY() - radio < limite1 || posicion.getY() + radio > limite2)
+				return true;
+			else
+				return false;
+		} catch (DimensionNoValidaException e) {
+			// No debería pasar nunca ya que comprobamos al contruir la Entidad
+			e.printStackTrace();
 			return false;
+		}
 	}
 	
+	public String toString() {
+		return (super.toString() + "\nPelota. Radio: " + this.radio);
+	}
 }

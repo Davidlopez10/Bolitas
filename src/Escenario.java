@@ -6,7 +6,9 @@ import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
 import Entidades.Entidad;
-
+import Entidades.Rectangulo;
+import Exception.ColisionaException;
+import Exception.DimensionNoValidaException;
 
 
 public class Escenario extends JComponent {
@@ -17,7 +19,7 @@ public class Escenario extends JComponent {
 	
 	private int maxEntidades;
 	private int numEntidades;
-	private Entidad[] listaEntidades;
+	private Entidad[] listaEntidades;	
 	
 	private Color colorFondo;
 	
@@ -62,10 +64,20 @@ public class Escenario extends JComponent {
 		this.dt = dt;
 	}
 	
-	public boolean insertarEntidad(Entidad ent) {
+	public boolean insertarEntidad(Entidad ent) throws ColisionaException {
 		int i=0;
-		while (listaEntidades[i]!=null)
+		
+		if (ent.hayColision(listaEntidades,numEntidades) != null ||
+			ent.hayColisionX(0,ancho)                            ||
+			ent.hayColisionY(0,alto)
+			) 
+				throw new ColisionaException(ent);
+		
+		while (i<maxEntidades && listaEntidades[i]!=null)
 			i++;
+		
+		System.out.println("Insertado "+ i + " / " + maxEntidades);
+		
 		if (i==maxEntidades) {
 			return false;
 		}
@@ -93,37 +105,32 @@ public class Escenario extends JComponent {
 		for (int i=0;i<numEntidades;i++)
 			listaEntidades[i].calcularNuevasPosiciones(dt);
 		
-		boolean colision;
+
 		// Cálculo colisiones
 		for (int i=0;i<numEntidades;i++) {
 			
 			// Colisiones con los bordes
-			if (listaEntidades[i].hayColisionX(0,ancho)) 
-				listaEntidades[i].getVelocidad().invertirX();
-			
-			if (listaEntidades[i].hayColisionY(0,alto)) 
-				listaEntidades[i].getVelocidad().invertirY();
-			
-			
-			
-			// Colisiones con otros objetos
-			colision=false;
-			for (int j=0;j<numEntidades;j++) {
-				if (i==j)
-					j++;
-				if (j==numEntidades)
-					break;
-				if (listaEntidades[i].hayColision(listaEntidades[j])) {
-					colision=true;					
+			try {
+				if (listaEntidades[i].hayColisionX(0,ancho)) 
+					listaEntidades[i].getVelocidad().invertirX();
+		
+				
+				if (listaEntidades[i].hayColisionY(0,alto)) 
+					listaEntidades[i].getVelocidad().invertirY();
+				
+			} catch (DimensionNoValidaException e) {
+				// No debería pasar ya que comprobamos los vectores cuando construimos la entidad
+				e.printStackTrace();
+			}
+			// Colisiones con el resto de entidades
+			for (int j=i+1;j<numEntidades;j++) {
+				if (Entidad.hayColision(listaEntidades[i],listaEntidades[j])) {
+					Entidad.trataColision(listaEntidades[i],listaEntidades[j]);
 				}
 			}
-			if (colision==true) {
-				listaEntidades[i].getVelocidad().invertirXY();
-			}
 		}
-		
-		
 	}
+	
 	
 	public void dibuja() throws Exception {
 		SwingUtilities.invokeAndWait(new Runnable() {
@@ -136,13 +143,9 @@ public class Escenario extends JComponent {
 	public void accion() {
 		System.out.println("He entrado en accion");
 		while (true) {
-			System.out.println(listaEntidades[0].getPosicion());
 			calculaFisica(dt);
 			try {
 				dibuja();
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
