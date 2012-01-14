@@ -2,9 +2,6 @@ package Mates;
 
 import Exception.DimensionNoValidaException;
 
-// TODO: Generaliza a vectores de n componentes
-// TODO: Implementar métodos entre matrices y vectores
-
 public class Vector {
 	
 	private int dimension;
@@ -20,7 +17,7 @@ public class Vector {
 		dimension=datos.length;
 	}
 	
-	public Vector(double datos[],int dimension) {
+	public Vector(int dimension,double datos[]) {
 		this.vector=datos;
 		this.dimension=dimension;
 	}
@@ -113,35 +110,42 @@ public class Vector {
 	
 	public Vector suma(Vector v) throws DimensionNoValidaException {
 		if (this.dimension() != v.dimension())
-			throw new DimensionNoValidaException("Intentado sumar " + v + " y " + this );
+			throw new DimensionNoValidaException("Intentado sumar " + v + " a " + this );
 	
 		double[] vect = new double[this.dimension];
 		for (int i=0;i<this.dimension();i++)
 			vect[i]=this.get(i)+v.get(i);
 		
-		return new Vector(vect,this.dimension);
+		return new Vector(this.dimension,vect);
 	}
 	
 	public Vector resta(Vector v) throws DimensionNoValidaException {
 		if (this.dimension() != v.dimension())
-			throw new DimensionNoValidaException("Intentado sumar " + v + " y " + this );
+			throw new DimensionNoValidaException("Intentado restar " + v + " a " + this );
 	
 		double[] vect = new double[this.dimension];
 		for (int i=0;i<this.dimension();i++)
 			vect[i]=this.get(i)-v.get(i);
 		
-		return new Vector(vect,this.dimension);
+		return new Vector(this.dimension,vect);
 	}
 	
 	public String toString() {
+		if (this.dimension() == 0)
+			return "()";
+		
 		String cadena="(";
 		for (int i=0;i<this.dimension()-1;i++)
 			cadena += this.get(i) +",";
+		
 		cadena += this.get(this.dimension()-1) + ")";
 		return cadena;
 	}
 	
-	public double distanciaA(Vector v) {
+	public double distanciaA(Vector v) throws DimensionNoValidaException {
+		if (this.dimension() != v.dimension())
+			throw new DimensionNoValidaException("Intentando calcular distancia de " + v + "a " + this);
+		
 		double distancia=0;
 		for (int i=0;i<this.dimension();i++)
 			distancia += Math.pow(this.get(i) - v.get(i), 2);
@@ -159,10 +163,9 @@ public class Vector {
 		return this.div(this.norma());
 	}
 	
-	public Vector proyectarSobre(Vector u) throws DimensionNoValidaException {
+	public Vector proyectarSobre(Vector u) throws Exception {
 		if (u.norma() == 0)
-			System.out.println("ERROR PROYECTANDO" + this + u);
-		// productoEscalar puede lanzar DimensionNoValidaException
+			throw new ArithmeticException("proyeccion sobre (0,...,0)");
 		return u.normalizar().mult(this.productoEscalar(u)/u.norma());
 	}
 	
@@ -171,15 +174,16 @@ public class Vector {
 		for (int i=0;i<this.dimension();i++)
 			vect[i]=this.get(i)*multiplicador;
 		
-		return new Vector(vect,this.dimension);
+		return new Vector(this.dimension,vect);
 	}
 	
-	public Vector div(double divisor) {
+	public Vector div(double divisor) throws ArithmeticException {
+		if (divisor==0)
+			throw new ArithmeticException("Division entre 0");
 		return this.mult(1/divisor);
 	}
 	
 	public double productoEscalar(Vector vect) throws DimensionNoValidaException {
-		
 		if (this.dimension() != vect.dimension())
 			throw new DimensionNoValidaException("Intentado multiplicar " + this + " · " + vect);
 		
@@ -194,7 +198,12 @@ public class Vector {
 		return this.productoEscalar(vect) / (this.norma() * vect.norma());
 	}
 	
-	public static Vector getRandomVector(double limitex, double limitey) {
-		return new Vector(Math.random() * limitex,Math.random() * limitey);
+	// TODO: Testear este métodos
+	public static Vector getRandomVector(int dimension, double limiteinf, double limitesup) {
+		double datos[] = new double[dimension];
+		for (int i=0;i<dimension;i++)
+			datos[i] = Math.random()*(limitesup-limiteinf)-limiteinf;
+		
+		return new Vector(dimension,datos);
 	}
 }

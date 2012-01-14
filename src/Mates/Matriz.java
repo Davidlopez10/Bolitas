@@ -66,7 +66,7 @@ public class Matriz {
 			datos[j] = this.matriz[indice][j];
 		}
 		
-		return new Vector(datos,this.getColumnas());
+		return new Vector(this.getColumnas(),datos);
 	}
 	
 	public Vector getColumna(int indice) throws IndexOutOfBoundsException{
@@ -75,16 +75,23 @@ public class Matriz {
 			datos[i] = this.matriz[i][indice];
 		}
 		
-		return new Vector(datos,this.getFilas());
-		
+		return new Vector(this.getFilas(),datos);
 	}
 	
 	public void set(int i,int j,int nuevoValor) throws IndexOutOfBoundsException {
 		matriz[i][j]=nuevoValor;
 	}
 	
-	public double[][] getMatrizNumeros() {
+	public double[][] getDatos() {
 		return matriz;
+	}
+	
+	public int[][] getDatosInt() {
+		int datos[][] = new int[this.getFilas()][this.getColumnas()];
+		for (int i=0;i<this.getFilas();i++)
+			for (int j=0;j<this.getColumnas();j++)
+				datos[i][j]= (int) this.get(i, j);
+		return datos;
 	}
 	
 	public Matriz suma(Matriz m) throws DimensionNoValidaException {
@@ -119,7 +126,7 @@ public class Matriz {
 			for (int j=0;j<this.getColumnas();j++)
 				resultado[i] += v.get(j)*this.matriz[j][i];
 		
-		return new Vector(resultado,this.getFilas());
+		return new Vector(this.getFilas(),resultado);
 	}
 	
 	public Matriz por(Matriz m) throws DimensionNoValidaException {
@@ -135,7 +142,10 @@ public class Matriz {
 		return new Matriz(this.getFilas(),m.getColumnas(),matrizResultado);
 	}
 	
-	public Matriz entre(double n) {
+	public Matriz entre(double n) throws ArithmeticException {
+		if (n==0)
+			throw new ArithmeticException("Division entre 0");
+		
 		return this.por(1/n);
 	}
 	public String toString() {

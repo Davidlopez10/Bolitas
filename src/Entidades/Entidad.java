@@ -106,7 +106,12 @@ public abstract class Entidad {
 					ent1P.setVelocidad(Vel1Final);
 					ent2P.setVelocidad(Vel2Final);	
 				} catch (DimensionNoValidaException e) {
-					// No debería ser lanzada nunca ya que comprobamos al contruir las dimensiones
+					// No debería ser lanzada nunca ya que comprobamos al construir las dimensiones
+					e.printStackTrace();
+				} catch (ArithmeticException e) {
+					// Podría pasar si un objeto colisiona consigo mismo...
+					e.printStackTrace();
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -120,8 +125,16 @@ public abstract class Entidad {
 		if (ent1 instanceof Pelota) {
 			Pelota ent1P = (Pelota) ent1;
 			if (ent2 instanceof Pelota) {
-				Pelota ent2P = (Pelota) ent2;
-				if ( ent1P.getRadio() + ent2P.getRadio() > ent1P.getPosicion().distanciaA(ent2P.getPosicion())) 
+				Pelota ent2P = (Pelota) ent2; 
+				double distancia;
+				try {
+					distancia = ent1P.getPosicion().distanciaA(ent2P.getPosicion());
+				} catch (DimensionNoValidaException e) {
+					// No debería pasar ya que controlamos las dimensiones al construir entidades
+					e.printStackTrace();
+					return false;
+				}
+				if ( ent1P.getRadio() + ent2P.getRadio() > distancia ) 
 					return true;
 				else 
 					return false;

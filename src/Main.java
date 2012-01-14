@@ -40,8 +40,8 @@ public class Main {
 		ventana.setVisible(true);
 		
 		try {
-			escenario.insertarEntidad(new Pelota(10, new Vector(500,400), new Vector(0,-10), new Vector(0,2),Color.BLUE));
-			escenario.insertarEntidad(new Pelota(10, new Vector(490,300), new Vector(0,0), new Vector(0,2),Color.RED));
+			escenario.insertarEntidad(new Pelota(20, new Vector(500,400), new Vector(0,-10), new Vector(0,2),Color.BLUE));
+			escenario.insertarEntidad(new Pelota(20, new Vector(490,300), new Vector(0,0), new Vector(0,2),Color.RED));
 			escenario.insertarEntidad(new Pelota(20, new Vector(500,500), new Vector(0,10), new Vector(0,2),Color.BLUE));
 			escenario.insertarEntidad(new Pelota(20, new Vector(500,100), new Vector(0,-20), new Vector(0,2),Color.RED));
 		} catch (Exception e) {
@@ -51,8 +51,7 @@ public class Main {
 		try {
 			escenario.insertarEntidad(new Rectangulo(10,30, new Vector(100,100), new Vector(10,-4), new Vector(0,0), Color.BLUE));
 			escenario.insertarEntidad(new Rectangulo(10,30, new Vector(400,100), new Vector(-3,7), new Vector(0,0), Color.GREEN));
-		} catch (Exception e1) {
-			
+		} catch (Exception e1) {		
 			e1.printStackTrace();
 		}
 	
@@ -73,7 +72,6 @@ public class Main {
 		}*/
 		
 		// Comenzamos la animación.
-		
 		escenario.accion();
 	}
 }
