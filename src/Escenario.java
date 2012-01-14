@@ -6,7 +6,6 @@ import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
 import Entidades.Entidad;
-import Entidades.Rectangulo;
 import Exception.ColisionaException;
 import Exception.DimensionNoValidaException;
 

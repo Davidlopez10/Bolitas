@@ -127,19 +127,11 @@ public class Matriz {
 			throw new DimensionNoValidaException("Intentando multiplicar \n" + this + " por \n" + m);
 		
 		double[][] matrizResultado = new double[this.getFilas()][m.getColumnas()];
-		double a=0;
-		double b=0;
 		for (int i=0;i<this.getFilas();i++) 
 			for (int j=0;j<m.getColumnas();j++) 
-				for (int k=0;k<this.getColumnas();k++) {
-					/*a = this.get(i,k);
-					b = m.get(k, j);
-					matrizResultado[i][j] += a*b;*/
+				for (int k=0;k<this.getColumnas();k++) 
 					matrizResultado[i][j] += this.get(i, k)*m.get(k, j);
-				}
 				
-			
-		
 		return new Matriz(this.getFilas(),m.getColumnas(),matrizResultado);
 	}
 	
@@ -147,7 +139,7 @@ public class Matriz {
 		return this.por(1/n);
 	}
 	public String toString() {
-		String temp="";
+		String temp = "";
 		for (int i=0;i<filas;i++) {
 			for (int j=0;j<columnas;j++) 
 				temp += matriz[i][j] + " ";
