@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Exception.DimensionNoValidaException;
+import Mates.Recta;
 import Mates.Vector;
 
 // TODO: Agregar masa....
@@ -289,7 +290,15 @@ public abstract class Entidad {
 				else
 					return false;
 			} else if (ent2 instanceof EntidadPoligono) {
+				EntidadPoligono ent2Pol = (EntidadPoligono) ent2;
 				// TODO: Implementar
+				// Falla (intersectar segmetnos, no rectas)
+				Recta recta = new Recta(ent2Pol.getVerticeAbsoluto(ent2Pol.getNumeroVertices()-1), ent2Pol.getVerticeAbsoluto(0));
+				for (int i=0; i<ent2Pol.getNumeroVertices()-1;i++) {
+					recta = new Recta(ent2Pol.getVerticeAbsoluto(i), ent2Pol.getVerticeAbsoluto(i+1));
+						if (recta.distanciaA(ent1P.getPosicion()) < ent1P.getRadio())
+							return true;
+				}
 				return false;
 			} else {
 				return hayColision(ent2, ent1);
@@ -298,7 +307,6 @@ public abstract class Entidad {
 			EntidadPoligono ent1Pol = (EntidadPoligono) ent1;
 			if (ent2 instanceof EntidadPoligono) {
 				EntidadPoligono ent2Pol = (EntidadPoligono) ent2;
-				// TODO: Imlementar:
 				for (int i=0; i<ent1Pol.getNumeroVertices();i++)
 					if (EntidadPoligono.contiene(ent2Pol, ent1Pol.getVerticeAbsoluto(i)))
 						return true;

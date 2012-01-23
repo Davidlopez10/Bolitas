@@ -11,6 +11,7 @@ import Entidades.EntidadRectangulo;
 import Exception.ColisionaException;
 import Exception.DimensionNoValidaException;
 import Mates.Matriz;
+import Mates.Recta;
 import Mates.Vector;
 
 // http://enalpha.wordpress.com/2009/05/08/trabaja-mas-rapido-en-eclipse-con-atajos-y-trucos/
@@ -24,7 +25,22 @@ public class Main {
 	static final int ALTO = 600;
 
 	public static void main(String args[]) {
-
+		
+		Vector p1 = new Vector(3,4);
+		Vector p2 = new Vector(1,1);
+		Vector p3 = new Vector(20,13);
+		Recta recta = new Recta(p1,p2);
+		System.out.println(recta.distanciaA(p3));
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		
+		
 		int FPS = 1;
 		int numPelotas = 1;
 		double radioPelotas = 7;
@@ -44,7 +60,7 @@ public class Main {
 
 		// Creamos un escenario.
 		Escenario escenario = new Escenario(ANCHO, ALTO, 1000, Color.BLACK,
-				0.0001, FPS);
+				0.00005, FPS);
 
 		// Añadimos dicho escenario a la ventana y terminamos de crearla.
 		ventana.getContentPane().add(escenario);
