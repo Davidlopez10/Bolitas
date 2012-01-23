@@ -8,7 +8,7 @@ public class Vector {
 	private double[] vector;
 	
 	public Vector(double ... datos) {
-		vector= new double[datos.length];
+		vector = new double[datos.length];
 		int i=0;
 		for (double n : datos) {
 			vector[i] = n;
@@ -17,9 +17,10 @@ public class Vector {
 		dimension=datos.length;
 	}
 	
-	public Vector(int dimension,double datos[]) {
-		this.vector=datos;
-		this.dimension=dimension;
+	public Vector(Vector p1, Vector p2) throws DimensionNoValidaException {
+		Vector nuevoVector = p2.resta(p1);
+		dimension = nuevoVector.dimension();
+		vector = nuevoVector.getDatos();
 	}
 	
 	public int dimension() {
@@ -116,7 +117,7 @@ public class Vector {
 		for (int i=0;i<this.dimension();i++)
 			vect[i]=this.get(i)+v.get(i);
 		
-		return new Vector(this.dimension,vect);
+		return new Vector(vect);
 	}
 	
 	public Vector resta(Vector v) throws DimensionNoValidaException {
@@ -127,7 +128,7 @@ public class Vector {
 		for (int i=0;i<this.dimension();i++)
 			vect[i]=this.get(i)-v.get(i);
 		
-		return new Vector(this.dimension,vect);
+		return new Vector(vect);
 	}
 	
 	public String toString() {
@@ -174,7 +175,7 @@ public class Vector {
 		for (int i=0;i<this.dimension();i++)
 			vect[i]=this.get(i)*multiplicador;
 		
-		return new Vector(this.dimension,vect);
+		return new Vector(vect);
 	}
 	
 	public Vector div(double divisor) throws ArithmeticException {
@@ -204,6 +205,6 @@ public class Vector {
 		for (int i=0;i<dimension;i++)
 			datos[i] = Math.random()*(limitesup-limiteinf)-limiteinf;
 		
-		return new Vector(dimension,datos);
+		return new Vector(datos);
 	}
 }

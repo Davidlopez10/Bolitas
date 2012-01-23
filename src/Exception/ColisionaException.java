@@ -5,7 +5,6 @@ import Entidades.Entidad;
 public class ColisionaException extends Exception {
 	
 	private Entidad entidadColisionada;
-	private static final long serialVersionUID = 1L;
 	
 	public ColisionaException() {
 		super();
