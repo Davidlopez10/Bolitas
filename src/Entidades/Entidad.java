@@ -4,15 +4,26 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Exception.DimensionNoValidaException;
-import Mates.Recta;
-import Mates.Vector;
+import Mates.Vector2D;
 
-// TODO: Agregar masa....
+// TODO: Modificar colisiones para que usen masa
+// TODO: Añadir nombre único a cada clase.
+
+/**
+ * Esta clase abstracta define entidades para la clase Escenario.
+ * Una entidad es todo objeto que es representado en un escenario definida por (al menos):
+ * Posicion, velocidad, aceleracion
+ * Posicion velocidad y aceleracion angulares
+ * Masa y color.
+ * 
+ * @author Jose Diaz
+ *
+ */
 public abstract class Entidad {
 
-	protected Vector posicion;
-	protected Vector velocidad;
-	protected Vector aceleracion;
+	protected Vector2D posicion;
+	protected Vector2D velocidad;
+	protected Vector2D aceleracion;
 
 	protected double posicionAngular;
 	protected double velocidadAngular;
@@ -22,17 +33,27 @@ public abstract class Entidad {
 
 	protected Color color;
 
-	public Entidad(Vector posicion, Vector velocidad, Vector aceleracion,
+	/**
+	 *  Constructor básico (se omiten características de giro para la entidad)
+	 * 
+	 * @param posicion 
+	 * @param velocidad 
+	 * @param aceleracion 
+	 * @param masa 
+	 * @param color
+	 * @throws DimensionNoValidaException Si alguno de los vectores posicion, velocidad o aceleracion no tienen 2 componentes
+	 */
+	public Entidad(Vector2D posicion, Vector2D velocidad, Vector2D aceleracion,
 			double masa, Color color) throws DimensionNoValidaException {
-		if (posicion.dimension() != 2)
+		if (posicion.getDimension() != 2)
 			throw new DimensionNoValidaException(
-					"Vector posicion debe ser de dos coordenadas " + posicion);
-		if (velocidad.dimension() != 2)
+					"Vector2D posicion debe ser de dos coordenadas " + posicion);
+		if (velocidad.getDimension() != 2)
 			throw new DimensionNoValidaException(
-					"Vector velocidad debe ser de dos coordenadas " + velocidad);
-		if (aceleracion.dimension() != 2)
+					"Vector2D velocidad debe ser de dos coordenadas " + velocidad);
+		if (aceleracion.getDimension() != 2)
 			throw new DimensionNoValidaException(
-					"Vector aceleracion debe ser de dos coordenadas "
+					"Vector2D aceleracion debe ser de dos coordenadas "
 							+ aceleracion);
 
 		this.posicion = posicion;
@@ -48,19 +69,32 @@ public abstract class Entidad {
 		this.color = color;
 	}
 
-	public Entidad(Vector posicion, Vector velocidad, Vector aceleracion,
+	/**
+	 * Constructor de entidades
+	 * 
+	 * @param posicion
+	 * @param velocidad
+	 * @param aceleracion
+	 * @param posicionAngular
+	 * @param velocidadAngular
+	 * @param aceleracionAngular
+	 * @parWam masa
+	 * @param color
+	 * @throws DimensionNoValidaException Si alguno de los vectores posicion, velocidad o aceleracion no tienen 2 componentes
+	 */
+	public Entidad(Vector2D posicion, Vector2D velocidad, Vector2D aceleracion,
 			double posicionAngular, double velocidadAngular,
 			double aceleracionAngular, double masa, Color color)
 			throws DimensionNoValidaException {
-		if (posicion.dimension() != 2)
+		if (posicion.getDimension() != 2)
 			throw new DimensionNoValidaException(
-					"Vector posicion debe ser de dos coordenadas " + posicion);
-		if (velocidad.dimension() != 2)
+					"Vector2D posicion debe ser de dos coordenadas " + posicion);
+		if (velocidad.getDimension() != 2)
 			throw new DimensionNoValidaException(
-					"Vector velocidad debe ser de dos coordenadas " + velocidad);
-		if (aceleracion.dimension() != 2)
+					"Vector2D velocidad debe ser de dos coordenadas " + velocidad);
+		if (aceleracion.getDimension() != 2)
 			throw new DimensionNoValidaException(
-					"Vector aceleracion debe ser de dos coordenadas "
+					"Vector2D aceleracion debe ser de dos coordenadas "
 							+ aceleracion);
 
 		this.posicion = posicion;
@@ -76,111 +110,220 @@ public abstract class Entidad {
 		this.color = color;
 	}
 
-	public Vector getPosicion() {
+	/**
+	 * Devuelve la posicion de la entidad
+	 * 
+	 * @return posicion de la entidad
+	 */
+	public Vector2D getPosicion() {
 		return posicion;
 	}
 
-	public void setPosicion(Vector posicion) {
+	/**
+	 * Cambia la posicion de la entidad
+	 * 
+	 * @param posicion Nueva posicion.
+	 */
+	public void setPosicion(Vector2D posicion) {
 		this.posicion = posicion;
 	}
 
-	public Vector getVelocidad() {
+	/**
+	 * Devuelve el vector  velocidad de la entidad
+	 * 
+	 * @return Vector2D velocidad de la entidad
+	 */
+	public Vector2D getVelocidad() {
 		return velocidad;
 	}
 
-	public void setVelocidad(Vector velocidad) {
+	/**
+	 * Cambia el vector velocidad de la entidad
+	 * 
+	 * @param velocidad Nuevo vector entidad
+	 */
+	public void setVelocidad(Vector2D velocidad) {
 		this.velocidad = velocidad;
 	}
 
-	public Vector getAceleracion() {
+	/**
+	 * Devuelve el vector aceleracion de la entidad
+	 * 
+	 * @return Vector2D aceleracion de la entidad
+	 */
+	public Vector2D getAceleracion() {
 		return aceleracion;
 	}
 
-	public void setAceleracion(Vector aceleracion) {
+	/**
+	 * Cambia el vector aceleracion de la entidad
+	 * 
+	 * @param aceleracion Nuevo vector aceleracion de la entidad
+	 */
+	public void setAceleracion(Vector2D aceleracion) {
 		this.aceleracion = aceleracion;
 	}
 
+	/**
+	 * Devuelve la masa de la entidad
+	 * 
+	 * @return masa de la entidad
+	 */
 	public double getMasa() {
 		return this.masa;
 	}
 
+	/**
+	 * Cambia la masa de la entidad
+	 * 
+	 * @param nuevaMasa nueva masa para la entidad
+	 */
 	public void setMasa(double nuevaMasa) {
 		this.masa = nuevaMasa;
 	}
 
+	/**
+	 * Devuelve la orientacion del objeto
+	 * 
+	 * @return Devuelve el angulo en el que el objeto está orientado en ese momento
+	 */
 	public double getPosicionAngular() {
 		return this.posicionAngular;
 	}
 
-	public void setPosicionAngular(double pos) {
-		while (pos > 2 * Math.PI)
-			pos -= 2 * Math.PI;
-		this.posicionAngular = pos;
+	/**
+	 * Establece una nueva orientación para el objeto.
+	 * 
+	 * @param posicionAngular Nueva posicion angular
+	 */
+	public void setPosicionAngular(double posicionAngular) {
+		while (posicionAngular > 2 * Math.PI)
+			posicionAngular -= 2 * Math.PI;
+		this.posicionAngular = posicionAngular;
 	}
 
+	/**
+	 * Devuelve la velocidad angular
+	 * 
+	 * @return velocidad angular de la entidad
+	 */
 	public double getVelocidadAngular() {
 		return this.velocidadAngular;
 	}
 
-	public void setVelocidadAngular(double vel) {
-		this.velocidadAngular = vel;
+	/**
+	 * Nueva velocidad angular
+	 * 
+	 * @param nuevaVelocidadAngular Nueva velocidad angular
+	 */
+	public void setVelocidadAngular(double nuevaVelocidadAngular) {
+		this.velocidadAngular = nuevaVelocidadAngular;
 	}
 
+	/**
+	 * Invierte la velocidad angular de la entidad 
+	 */
 	public void invertirVelocidadAngular() {
 		this.velocidadAngular = -this.velocidadAngular;
 	}
 
+	/**
+	 * Devuelve la aceleracion angular de la entidad
+	 * 
+	 * @return aceleracion angular
+	 */
 	public double getAceleracionAngular() {
 		return this.aceleracionAngular;
 	}
 
-	public void setAceleracionAngular(double aa) {
-		this.aceleracionAngular = aa;
+	/**
+	 * Establece una nueva velocidad angular para la entidad
+	 * 
+	 * @param nuevaVelocidadAngular nueva velocidad angular
+	 */
+	public void setAceleracionAngular(double nuevaVelocidadAngular) {
+		this.aceleracionAngular = nuevaVelocidadAngular;
 	}
 
+	/**
+	 * Devuelve el color de la entidad
+	 * 
+	 * @return color de la entidad
+	 */
 	public Color getColor() {
 		return this.color;
 	}
 
+	/**
+	 * Establece un nuevo color para la entidad
+	 * 
+	 * @param nuevoColor nuevo color.
+	 */
 	public void setColor(Color nuevoColor) {
 		this.color = nuevoColor;
 	}
 
+	/**
+	 * Dado un lapso de tiempo, actualiza las posiciones y las velocidades de la entidad
+	 * 
+	 * @param dt Laps de tiempo para los cálculos
+	 */
 	public void calcularNuevasPosiciones(double dt) {
-		try {
-			posicion.setX(posicion.getX() + velocidad.getX() * dt + 1 / 2
-					* aceleracion.getX() * dt * dt);
-			posicion.setY(posicion.getY() + velocidad.getY() * dt + 1 / 2
-					* aceleracion.getY() * dt * dt);
-			velocidad.setX(velocidad.getX() + aceleracion.getX() * dt);
-			velocidad.setY(velocidad.getY() + aceleracion.getY() * dt);
+		posicion.setX(posicion.getX() + velocidad.getX() * dt + 1 / 2
+				* aceleracion.getX() * dt * dt);
+		posicion.setY(posicion.getY() + velocidad.getY() * dt + 1 / 2
+				* aceleracion.getY() * dt * dt);
+		velocidad.setX(velocidad.getX() + aceleracion.getX() * dt);
+		velocidad.setY(velocidad.getY() + aceleracion.getY() * dt);
 
-			this.setPosicionAngular(this.getPosicionAngular()
-					+ this.getVelocidadAngular() * dt + (1 / 2)
-					* this.getAceleracionAngular() * Math.pow(dt, 2));
-			this.setVelocidadAngular(this.getVelocidadAngular()
-					+ this.getAceleracionAngular() * dt);
-		} catch (DimensionNoValidaException e) {
-			// No debería pasar nunca ya que comprobamos que los vectores sean
-			// adecuados al contruir la entidad.
-			e.printStackTrace();
-		}
+		this.setPosicionAngular(this.getPosicionAngular()
+				+ this.getVelocidadAngular() * dt + (1 / 2)
+				* this.getAceleracionAngular() * Math.pow(dt, 2));
+		this.setVelocidadAngular(this.getVelocidadAngular()
+				+ this.getAceleracionAngular() * dt);
 	}
 
+	/**
+	 * Pinta la entidad en un gráfico
+	 * 
+	 * @param g gráfico dondep intar la funcion
+	 */
 	public abstract void pintar(Graphics g);
 
-	public abstract boolean hayColisionX(int limite1, int limite2);
 
-	public abstract boolean hayColisionY(int limite1, int limite2);
+	/**
+	 * Detecta si la entidad colisiona o no con los bordes X del escenario
+	 * 
+	 * @param Xinf X minima del escenario
+	 * @param Xsup X máxima del escenario
+	 * @return TRUE si la entidad colisiona
+	 */
+	public abstract boolean hayColisionX(int Xinf, int Xsup);
+	
+	/**
+	 * Detecta si la entidad colisiona o no con los bordes Y del escenario
+	 * 
+	 * @param Xinf Y minima del escenario
+	 * @param Xsup Y máxima del escenario
+	 * @return TRUE si la entidad colisiona
+	 */
+	public abstract boolean hayColisionY(int Yinf, int Ysup);
 
-	public abstract void tratarColisionX();
+	/**
+	 * Procesa si hay una colision con otra entidad o no.
+	 * 
+	 * @param ent Entidad con la que comprobar si hay o no colision
+	 * @return TRUE si hay colisión con la entidad.
+	 */
+	public abstract boolean hayColision(Entidad ent);
 
-	public abstract void tratarColisionY();
-
-	public boolean hayColision(Entidad ent) {
-		return hayColision(this, ent);
-	}
-
+	/**
+	 * Procesa si hay una colision con alguna entidad en una lista de entidades o no
+	 * 
+	 * @param listaEntidades Lista de entidades con las que comprobar si hay o no colsión
+	 * @param n Numero de entidades ocupadas en el vector
+	 * @return Primera entidad de la lista con la que colisiona, o null si no colisiona con ninguna.
+	 */
 	public Entidad hayColision(Entidad listaEntidades[], int n) {
 		for (int i = 0; i < n; i++)
 			if (this.hayColision(listaEntidades[i]))
@@ -188,41 +331,47 @@ public abstract class Entidad {
 
 		return null;
 	}
-
-	public String toString() {
-		return ("Entidad: \nPosicion: " + posicion + " \nVelocidad: "
-				+ velocidad + " \nAceleracion " + aceleracion + " \nColor "
-				+ color + "\n Masa: " + this.masa);
+	
+	/**
+	 * Procesa la colision de la entidad con el borde X del escenario
+	 */
+	public void tratarColisionEscenarioX() {
+		this.getVelocidad().invertirX();
+		this.invertirVelocidadAngular();
+	}
+	
+	/**
+	 * Procesa la colision de la entidad con el borde Y del escenario
+	 */
+	public void tratarColisionEscenarioY() {
+		this.getVelocidad().invertirY();
+		this.invertirVelocidadAngular();
 	}
 
 	public static void trataColision(Entidad ent1, Entidad ent2) {
-		if (ent1 instanceof EntidadPelota) {
-			EntidadPelota ent1P = (EntidadPelota) ent1;
-			if (ent2 instanceof EntidadPelota) {
-				EntidadPelota ent2P = (EntidadPelota) ent2;
+		if (ent1 instanceof EntidadCirculo) {
+			EntidadCirculo ent1P = (EntidadCirculo) ent1;
+			if (ent2 instanceof EntidadCirculo) {
+				EntidadCirculo ent2P = (EntidadCirculo) ent2;
 
 				try {
-					Vector choque1a2 = ent1P.getPosicion().resta(
+					Vector2D choque1a2 = ent1P.getPosicion().resta(
 							ent2P.getPosicion());
-					Vector choque2a1 = ent2P.getPosicion().resta(
+					Vector2D choque2a1 = ent2P.getPosicion().resta(
 							ent1P.getPosicion());
 
-					Vector velde1a2 = (ent1P.getVelocidad()
+					Vector2D velde1a2 = (ent1P.getVelocidad()
 							.proyectarSobre(choque1a2));
-					Vector velde2a1 = (ent2P.getVelocidad()
+					Vector2D velde2a1 = (ent2P.getVelocidad()
 							.proyectarSobre(choque2a1));
 
-					Vector Vel1Final = ent1.getVelocidad().suma(velde2a1)
+					Vector2D Vel1Final = ent1.getVelocidad().suma(velde2a1)
 							.resta(velde1a2);
-					Vector Vel2Final = ent2.getVelocidad().suma(velde1a2)
+					Vector2D Vel2Final = ent2.getVelocidad().suma(velde1a2)
 							.resta(velde2a1);
 
 					ent1P.setVelocidad(Vel1Final);
 					ent2P.setVelocidad(Vel2Final);
-				} catch (DimensionNoValidaException e) {
-					// No debería ser lanzada nunca ya que comprobamos al
-					// construir las dimensiones
-					e.printStackTrace();
 				} catch (ArithmeticException e) {
 					// Podría pasar si un objeto colisiona consigo mismo...
 					e.printStackTrace();
@@ -268,58 +417,112 @@ public abstract class Entidad {
 			//Do Nothing?
 		}
 	}
-
-	public static boolean hayColision(Entidad ent1, Entidad ent2) {
-		
-		if (ent1 instanceof EntidadPelota) {
-			EntidadPelota ent1P = (EntidadPelota) ent1;
-			if (ent2 instanceof EntidadPelota) {
-				EntidadPelota ent2P = (EntidadPelota) ent2;
-				double distancia;
-				try {
-					distancia = ent1P.getPosicion().distanciaA(
-							ent2P.getPosicion());
-				} catch (DimensionNoValidaException e) {
-					// No debería pasar ya que controlamos las dimensiones al
-					// construir entidades
-					e.printStackTrace();
-					return false;
-				}
-				if (ent1P.getRadio() + ent2P.getRadio() > distancia)
-					return true;
-				else
-					return false;
-			} else if (ent2 instanceof EntidadPoligono) {
-				EntidadPoligono ent2Pol = (EntidadPoligono) ent2;
-				// TODO: Implementar
-				// Falla (intersectar segmetnos, no rectas)
-				Recta recta = new Recta(ent2Pol.getVerticeAbsoluto(ent2Pol.getNumeroVertices()-1), ent2Pol.getVerticeAbsoluto(0));
-				for (int i=0; i<ent2Pol.getNumeroVertices()-1;i++) {
-					recta = new Recta(ent2Pol.getVerticeAbsoluto(i), ent2Pol.getVerticeAbsoluto(i+1));
-						if (recta.distanciaA(ent1P.getPosicion()) < ent1P.getRadio())
-							return true;
-				}
-				return false;
-			} else {
-				return hayColision(ent2, ent1);
-			}
-		} else if (ent1 instanceof EntidadPoligono) {
-			EntidadPoligono ent1Pol = (EntidadPoligono) ent1;
-			if (ent2 instanceof EntidadPoligono) {
-				EntidadPoligono ent2Pol = (EntidadPoligono) ent2;
-				for (int i=0; i<ent1Pol.getNumeroVertices();i++)
-					if (EntidadPoligono.contiene(ent2Pol, ent1Pol.getVerticeAbsoluto(i)))
-						return true;
-				for (int i=0; i<ent2Pol.getNumeroVertices();i++)
-					if (EntidadPoligono.contiene(ent1Pol, ent2Pol.getVerticeAbsoluto(i)))
-						return true;
-				return false;
-			}
-			else {
-				return hayColision(ent2, ent1);
-			}
-		} else {
-			return false;
-		}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		return ("Entidad: \nPosicion: " + posicion + " \nVelocidad: "
+				+ velocidad + " \nAceleracion " + aceleracion + " \nColor "
+				+ color + "\n Masa: " + this.masa);
 	}
 }
+
+
+/*
+
+public static boolean hayColision(Entidad ent1, Entidad ent2) {
+
+if (ent1 instanceof EntidadPelota) {
+	EntidadPelota ent1P = (EntidadPelota) ent1;
+	if (ent2 instanceof EntidadPelota) {
+		EntidadPelota ent2P = (EntidadPelota) ent2;
+		double distancia;
+		try {
+			distancia = ent1P.getPosicion().distanciaA(
+					ent2P.getPosicion());
+		} catch (DimensionNoValidaException e) {
+			// No debería pasar ya que controlamos las dimensiones al
+			// construir entidades
+			e.printStackTrace();
+			return false;
+		}
+		if (ent1P.getRadio() + ent2P.getRadio() > distancia)
+			return true;
+		else
+			return false;
+	} else if (ent2 instanceof EntidadPoligono) {
+		EntidadPoligono ent2Pol = (EntidadPoligono) ent2;
+		int n = ent2Pol.getNumeroVertices();
+		// TODO: Comprobar
+		// Comprobamos si contiene a los vértices
+		for (int i=0; i < n; i++) {
+			if (ent1P.contiene(ent2Pol.getVerticeAbsoluto(i)))
+				return true;
+		}			
+		// Comprobamos si contiene una parte del segmento:
+		try {
+			for (int i=0; i<n; i++) {
+				
+				Vector2D primerVer = ent2Pol.getVerticeAbsoluto(i);
+				Vector2D segunVer  = ent2Pol.getVerticeAbsoluto((i+1)%n);
+				
+				Vector2D vectorSegmento = new Vector2D(primerVer, segunVer);
+				Vector2D verticeCentro = new Vector2D(primerVer,ent1P.getPosicion());
+				
+				Vector2D normal = verticeCentro.resta(verticeCentro.proyectarSobre(vectorSegmento));
+				if (normal.norma() < ent1P.getRadio()) {
+					// La normal a la recta que determina el segmento es menor que el radio del circulo
+					// Pero aun nos falta comprobar que la proyeccion del circulo en la recta cae
+					// dentro del segmento
+					
+					normal.invertirX();
+					normal.invertirY();
+					Vector2D puntoProyectado = ent1P.getPosicion().suma(normal);
+					
+					// TODO: Optimizar
+					if (puntoProyectado.distanciaA(primerVer) + puntoProyectado.distanciaA(segunVer)
+						==
+						primerVer.distanciaA(segunVer)
+						) 
+						{
+							return true;
+						}
+						
+				}
+
+			}
+		} catch (DimensionNoValidaException e) {
+			// Imposible ¿? (se comprueba en los constructores)
+			e.printStackTrace();
+		} catch (ArithmeticException e) {
+			// Un vértice del polígono coincide con el centro del circulo ?¿?¿
+			return true;
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return false;
+	} else {
+		return hayColision(ent2, ent1);
+	}
+} else if (ent1 instanceof EntidadPoligono) {
+	EntidadPoligono ent1Pol = (EntidadPoligono) ent1;
+	if (ent2 instanceof EntidadPoligono) {
+		EntidadPoligono ent2Pol = (EntidadPoligono) ent2;
+		for (int i=0; i<ent1Pol.getNumeroVertices();i++)
+			if (EntidadPoligono.contiene(ent2Pol, ent1Pol.getVerticeAbsoluto(i)))
+				return true;
+		for (int i=0; i<ent2Pol.getNumeroVertices();i++)
+			if (EntidadPoligono.contiene(ent1Pol, ent2Pol.getVerticeAbsoluto(i)))
+				return true;
+		return false;
+	}
+	else {
+		return hayColision(ent2, ent1);
+	}
+} else {
+	return false;
+}
+}
+*/
