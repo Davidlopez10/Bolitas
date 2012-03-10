@@ -21,8 +21,8 @@ public class Main {
 		final int ALTO = 600;
 		final int NumExcepcionesHastaParar = 1000;
 
-		int numPelotas = 100;
-		double radioPelotas = 1;
+		int numPelotas = 10;
+		double radioPelotas = 10;
 		int numExcepcionesProducidas = 0;
 		int entidadesNoSpawneadas = 0;
 		

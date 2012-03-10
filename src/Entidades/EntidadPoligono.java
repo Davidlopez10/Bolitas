@@ -540,5 +540,28 @@ public class EntidadPoligono extends Entidad {
 	public static boolean esComplejo(double puntos[][]) {
 		return false;
 	}
+	
+	//TODO: Implementar
+	/**
+	 * Dados los puntos que definen a un polígono, devuelve el centro de masa del mismo, suponiendo densidad constante
+	 * 
+	 * @param puntos Puntos que definen al polígono
+	 * @return Centro de masa
+	 */
+	@Deprecated
+	public static Vector centroMasa(double puntos[][]) {
+		return null;
+	}
+	
+	/**
+	 * Dada la matriz de puntos define a un polígono, devuelve el centro de masa del mismo, suponiendo densidad constante
+	 * 
+	 * @param puntos Matriz de puntos que define al polígono
+	 * @return Centro de masa
+	 */
+	public static Vector cetroMasa(Matriz puntos) {
+		return centroMasa(puntos.getDatos());
+	}
+	
 
 }

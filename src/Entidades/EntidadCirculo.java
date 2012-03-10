@@ -123,7 +123,7 @@ public class EntidadCirculo extends Entidad {
 		try {
 			g.fillOval((int) Math.round(posicion.getX() - radio),
 					(int) Math.round(posicion.getY() - radio),
-					2 * (int) Math.round(radio), 2 * (int) Math.round(radio));
+					2 * (int) Math.round(radio), 2*(int) Math.round(radio));
 		} catch (DimensionNoValidaException e) {
 			// No debería pasar nunca ya que comprobamos al contruir la Entidad
 			e.printStackTrace();
