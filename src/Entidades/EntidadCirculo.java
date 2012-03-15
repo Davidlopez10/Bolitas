@@ -125,11 +125,6 @@ public class EntidadCirculo extends Entidad {
 				    2 * (int) Math.round(radio), 
 				    2*(int) Math.round(radio)
 				  );
-		g.drawLine( (int) posicion.getX(), 
-				    (int) posicion.getY(),
-				    (int) (posicion.getX() + velocidad.div(180/radio).getX()), 
-				    (int) (posicion.getY() + velocidad.div(180/radio).getY())
-				  );
 	}
 	
 	/* (non-Javadoc)
