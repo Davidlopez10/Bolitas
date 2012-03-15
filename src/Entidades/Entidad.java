@@ -3,6 +3,8 @@ package Entidades;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import util.HerramientasGraficas;
+
 import Exception.DimensionNoValidaException;
 import Mates.Vector2D;
 
@@ -21,6 +23,8 @@ import Mates.Vector2D;
  */
 public abstract class Entidad {
 
+	static final int FACTOR_REDUCCION_VECTORES = 5;
+	
 	protected Vector2D posicion;
 	protected Vector2D velocidad;
 	protected Vector2D aceleracion;
@@ -28,6 +32,9 @@ public abstract class Entidad {
 	protected double posicionAngular;
 	protected double velocidadAngular;
 	protected double aceleracionAngular;
+	
+	protected boolean mostrarVelocidad = true;
+	protected boolean mostrarAceleracion = true;
 
 	protected double masa;
 
@@ -262,6 +269,43 @@ public abstract class Entidad {
 	public void setColor(Color nuevoColor) {
 		this.color = nuevoColor;
 	}
+	
+	/**
+	 * Devuelve true si actualmente se esta mostrando el vector velocidad de esta entidad por pantalla. False en otro caso.
+	 * 
+	 * @return true si actualmente se esta mostrando el vector velocidad de esta entidad por pantalla. False en otro caso.
+	 */
+	public boolean getMostrandoVelocidad() {
+		return mostrarVelocidad;
+	}
+	
+	/**
+	 * Devuelve true si actualmente se esta mostrando el vector aceleracion de esta entidad por pantalla. False en otro caso.
+	 * 
+	 * @return true si actualmente se esta mostrando el vector aceleracion de esta entidad por pantalla. False en otro caso.
+	 */
+	public boolean getMostrandoAceleracion() {
+		return mostrarAceleracion;
+	}
+	
+	/**
+	 * Establece si mostrar o no el vector velocidad por pantalla
+	 * 
+	 * @param b True para mostrar el vector velocidad por pantalla, false para ocultarlo.
+	 */
+	public void setMostrarVelocidad(boolean b) {
+		mostrarVelocidad = b;
+	}
+	
+	/**
+	 * Establece si mostrar o no el vector aceleracion por pantalla
+	 * 
+	 * @param b True para mostrar el vector aceleracion por pantalla, false para ocultarlo.
+	 */
+	public void setMostrarAceleracion(boolean b) {
+		mostrarAceleracion = b;
+	}
+	
 
 	/**
 	 * Dado un lapso de tiempo, actualiza las posiciones y las velocidades de la entidad
@@ -288,7 +332,17 @@ public abstract class Entidad {
 	 * 
 	 * @param g gráfico dondep intar la funcion
 	 */
-	public abstract void pintar(Graphics g);
+	public void pintar(Graphics g) {
+		if (this.mostrarVelocidad) {
+			g.setColor(Color.BLUE);
+			HerramientasGraficas.dibujarFlecha(posicion, posicion.suma(velocidad), g);
+		}
+		
+		if (this.mostrarAceleracion) {
+			g.setColor(Color.RED);
+			HerramientasGraficas.dibujarFlecha(posicion, posicion.suma(aceleracion), g);
+		}
+	}
 
 
 	/**

@@ -291,6 +291,7 @@ public class Matriz {
 		return new Vector(resultado);
 	}
 
+
 	/**
 	 * Devuelve una nueva matriz producto de ésta con la dada.
 	 * 

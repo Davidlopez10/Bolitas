@@ -15,14 +15,17 @@ import Mates.Vector2D;
 
 public class Main {
 
+	final static int ANCHO = 800;
+	final static int ALTO = 600;
+	final static int NumExcepcionesHastaParar = 1000;
+
 	public static void main(String args[]) {
 	
-		final int ANCHO = 800;
-		final int ALTO = 600;
-		final int NumExcepcionesHastaParar = 1000;
-
-		int numPelotas = 2;
-		double radioPelotas = 10;
+		Vector2D test = new Vector2D(5,5);
+		System.out.println(test.div(2));
+		
+		int numPelotas = 1;
+		double radioPelotas = 5;
 		int numExcepcionesProducidas = 0;
 		int entidadesNoSpawneadas = 0;
 		
@@ -37,7 +40,7 @@ public class Main {
 
 		// Creamos un escenario.
 		Escenario escenario = new Escenario(ventana, ANCHO, ALTO, 1000, Color.BLACK,
-				0.0001);
+				0.002);
 
 		ventana.pack();
 		ventana.setVisible(true);
@@ -52,8 +55,8 @@ public class Main {
 		
 		MatrizPuntos1 = MatrizPuntos1.por(10);
 		MatrizPuntos2 = MatrizPuntos2.por(10);
-/*
-		try {
+
+		/*try {
 			escenario.insertarEntidad(new EntidadRectangulo(50, 70, new Vector2D(100,
 					100), new Vector2D(200,100), new Vector2D(0, 0), 0,
 		    		6, 0, Color.BLUE));
@@ -72,8 +75,8 @@ public class Main {
 			try {
 				escenario.insertarEntidad(new EntidadCirculo(radioPelotas*5, new Vector2D(
 						Math.random() * ANCHO, Math.random() * ALTO),
-						new Vector2D(2000 * Math.random(), 2000 * Math.random()),
-						new Vector2D(0, 1000), new Color(generadorAleatorio
+						new Vector2D(50 * Math.random(), 50 * Math.random()),
+						new Vector2D(0, 30), new Color(generadorAleatorio
 								.nextInt(255), generadorAleatorio.nextInt(255),
 								generadorAleatorio.nextInt(255))));
 			} catch (ColisionException e1) {
@@ -84,7 +87,7 @@ public class Main {
 			try {
 				escenario.insertarEntidad(new EntidadCirculo(radioPelotas, new Vector2D(
 						Math.random() * ANCHO, Math.random() * ALTO),
-						new Vector2D(200 * Math.random(), 200 * Math.random()),
+						new Vector2D(500 * Math.random(), 500 * Math.random()),
 						new Vector2D(0, 0), Color.RED));
 				entidadesNoSpawneadas--;
 			} catch (Exception e) {

@@ -257,12 +257,13 @@ public class EntidadPoligono extends Entidad {
 	/* (non-Javadoc)
 	 * @see Entidades.Entidad#pintar(java.awt.Graphics)
 	 */
-	public void pintar(Graphics g) {
+	public void pintar(Graphics g) {	
 		g.setColor(this.getColor());
 		g.fillPolygon(this.getVerticesAbsolutos().getFila(0).getDatosInt(), 
 				      this.getVerticesAbsolutos().getFila(1).getDatosInt(), 
 				      this.getNumeroVertices());
-
+		
+		super.pintar(g);
 	}
 
 	/* (non-Javadoc)

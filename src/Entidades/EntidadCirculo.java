@@ -125,6 +125,7 @@ public class EntidadCirculo extends Entidad {
 				    2 * (int) Math.round(radio), 
 				    2*(int) Math.round(radio)
 				  );
+		super.pintar(g);
 	}
 	
 	/* (non-Javadoc)
