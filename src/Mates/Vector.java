@@ -36,9 +36,7 @@ public class Vector {
 	 * @throws DimensionNoValidaException Si Origen y Destino tienen dimensiones disintas
 	 */
 	public Vector(Vector p1, Vector p2) throws DimensionNoValidaException {
-		Vector nuevoVector = p2.resta(p1);
-		dimension = nuevoVector.getDimension();
-		vector = nuevoVector.getDatos();
+		this(p2.resta(p1).getDatos());
 	}
 	
 	/**

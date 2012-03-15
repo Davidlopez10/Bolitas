@@ -10,7 +10,6 @@ import javax.swing.SwingUtilities;
 import Entidades.Entidad;
 import Exception.ColisionException;
 
-// TODO: Implementar FPS constantes (o tiempo interno constante idnependiente dela velocida de cpu)
 // TODO: Interfaz gráfica para insertar y eliminar objetos
 // TODO: Métodos para eliminar objetos
 
@@ -19,7 +18,6 @@ import Exception.ColisionException;
  * Debe estar insertado en un Jframe donde se mostrará
  * 
  * @author Jose Diaz
- *
  */
 @SuppressWarnings("serial")
 public class Escenario extends JComponent {
@@ -35,15 +33,8 @@ public class Escenario extends JComponent {
 
 	private Color colorFondo;
 	
-	private boolean enMovimiento = false;
-
-	/*
-	 *  Determina la velocidad de la animacion (un valor más alto equivale a una
-	 *  animación más rápida)
-	 */
-	private double dt;
+	private boolean escenarioActivo = false;
 	 
-
 	/**
 	 * Constructor de Escenario
 	 * 
@@ -51,10 +42,9 @@ public class Escenario extends JComponent {
 	 * @param ancho ancho del escenario
 	 * @param alto alto del escenario
 	 * @param maxEntidades número máximo de entidades que caben en el escenario
-	 * @param colorFondo Color de fondo para el escenario
-	 * @param dt Velocidad del escenario (tiempo relativo)
+	 * @param colorFondo Color de fondo para el escenario)
 	 */
-	public Escenario(JFrame ventana, int ancho, int alto, int maxEntidades, Color colorFondo, double dt) {
+	public Escenario(JFrame ventana, int ancho, int alto, int maxEntidades, Color colorFondo) {
 		this.alto = alto;
 		this.ancho = ancho;
 		this.numEntidades = 0;
@@ -62,8 +52,6 @@ public class Escenario extends JComponent {
 		this.listaEntidades = new Entidad[maxEntidades];
 
 		this.colorFondo = colorFondo;
-
-		this.dt = dt;
 
 		setPreferredSize(new Dimension(ancho, alto));
 		ventana.getContentPane().add(this);
@@ -106,28 +94,10 @@ public class Escenario extends JComponent {
 	}
 
 	/**
-	 * Devuelve la velocidad o tiempo relativo del escenario
-	 * 
-	 * @return Velocidad del escenario
-	 */
-	public double getVelocidad() {
-		return dt;
-	}
-
-	/**
-	 * Establece un nuevo tiempo relativo o velocidad para el escenario
-	 * 
-	 * @param dt nueva velocidad
-	 */
-	public void setVelocidad(double dt) {
-		this.dt = dt;
-	}
-
-	/**
 	 * Inserta una nueva entidad en el escenario
 	 * 
 	 * @param ent Entidad a insertar
-	 * @return TRUE sii se insertó correctamente la entidad
+	 * @return TRUE si se insertó correctamente la entidad
 	 * @throws ColisionException Si se intentó insertar una entidad donde ya existía otra
 	 */
 	public boolean insertarEntidad(Entidad ent) throws ColisionException {
@@ -140,7 +110,6 @@ public class Escenario extends JComponent {
 		while (i < maxEntidades && listaEntidades[i] != null)
 			i++;
 
-		System.out.println("Insertado " + i + " / " + maxEntidades);
 
 		if (i == maxEntidades) {
 			return false;
@@ -219,26 +188,26 @@ public class Escenario extends JComponent {
 	 */
 	public void accion() {
 	
-		enMovimiento = true;
+		escenarioActivo = true;
 	
 		long ultimaVez = System.nanoTime();
 		double sinProcesar = 0;
 		double nanosegundosPorTick = 1000000000.0 / TICKS_POR_SEGUNDO;
 		int fotogramas = 0;
 		int ticks = 0;
-		long tiempoTemporal = System.currentTimeMillis();
+		long tempMostrarInfo = System.currentTimeMillis();
 		
-		while (enMovimiento) {
+		while (escenarioActivo) {
 			
 			long estaVez = System.nanoTime();
 			sinProcesar += (estaVez - ultimaVez) / nanosegundosPorTick;
 			ultimaVez = estaVez;
 			boolean hayQueRenderizar = true;
 			
-			while (sinProcesar >= 1) {
+			while (sinProcesar > 0) {
 				ticks++;
-				calculaFisica(dt*10);
-				sinProcesar -= 1;
+				calculaFisica(1.0/TICKS_POR_SEGUNDO);
+				sinProcesar--;
 				hayQueRenderizar = true;
 			}
 	
@@ -253,8 +222,8 @@ public class Escenario extends JComponent {
 				dibuja();
 			}
 	
-			if (System.currentTimeMillis() - tiempoTemporal > 1000) {
-				tiempoTemporal += 1000;
+			if (System.currentTimeMillis() - tempMostrarInfo > 1000) {
+				tempMostrarInfo += 1000;
 				System.out.println(ticks + " ticks, " + fotogramas + " fps");
 				fotogramas = 0;
 				ticks = 0;
@@ -263,7 +232,7 @@ public class Escenario extends JComponent {
 	}
 	
 	public void detener() {
-		enMovimiento = false;
+		escenarioActivo = false;
 	}
 
 }

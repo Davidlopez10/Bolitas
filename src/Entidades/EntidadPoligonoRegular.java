@@ -24,8 +24,7 @@ public class EntidadPoligonoRegular extends EntidadPoligono {
 	 * @throws DimensionNoValidaException
 	 */
 	public EntidadPoligonoRegular(int n, int radio, Vector2D posicion, Vector2D velocidad, Vector2D aceleracion, double masa, Color color) throws DimensionNoValidaException {
-		super(getMatrizPuntos(n,radio),posicion,velocidad,aceleracion,masa,color);
-		this.radio = radio;
+		this(n,radio,posicion,velocidad,aceleracion,0,0,0,masa,color);
 	}
 	
 	/**
@@ -59,7 +58,7 @@ public class EntidadPoligonoRegular extends EntidadPoligono {
 	
 	//TODO
 	/**
-	 * Establece un nuevo radio para el polígono
+	 * Establece un nuevo radio para el polígono en píxeles
 	 * 
 	 * @param radio Nuevo radio para el polígono.
 	 */
@@ -71,9 +70,9 @@ public class EntidadPoligonoRegular extends EntidadPoligono {
 	/**
 	 * Dado el número de vertices y el radio de los mismos, devuelve la matriz de puntos del polígono regular correspondiente
 	 * 
-	 * @param numVertices Número de vértices y lados del polígono
-	 * @param radio Radio del polígono
-	 * @return Matriz de puntos del polígono regular
+	 * @param numVertices Número de vértices del polígono
+	 * @param radio Radio del polígono en píxeles
+	 * @return Matriz de puntos del polígono regular (con coordenadas en píxeles)
 	 */
 	public static Matriz getMatrizPuntos(int numVertices, double radio) {
 		

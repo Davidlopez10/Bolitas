@@ -23,9 +23,7 @@ public class EntidadRectangulo extends EntidadPoligono {
 	 * @throws DimensionNoValidaException
 	 */
 	public EntidadRectangulo(double anchura, double altura, Vector2D posicion, Vector2D velocidad, Vector2D aceleracion, Color color) throws DimensionNoValidaException {
-		super(getMatrizPuntos(anchura,altura), posicion,velocidad,aceleracion,EntidadRectangulo.getMasa(anchura, altura), color);
-		this.altura=altura;
-		this.anchura = anchura;
+		this(anchura,altura,posicion,velocidad,aceleracion,0,0,0,color);
 	}
 	
 	/**
@@ -41,9 +39,7 @@ public class EntidadRectangulo extends EntidadPoligono {
 	 * @throws DimensionNoValidaException
 	 */
 	public EntidadRectangulo(double anchura, double altura, Vector2D posicion, Vector2D velocidad, Vector2D aceleracion, double masa, Color color) throws DimensionNoValidaException {
-		super(getMatrizPuntos(anchura,altura),posicion,velocidad,aceleracion, masa, color);
-		this.altura=altura;
-		this.anchura = anchura;
+		this(anchura,altura,posicion,velocidad,aceleracion,0,0,masa,color);
 	}
 	
 	/**
@@ -61,9 +57,7 @@ public class EntidadRectangulo extends EntidadPoligono {
 	 * @throws DimensionNoValidaException
 	 */
 	public EntidadRectangulo (double anchura, double altura, Vector2D posicion, Vector2D velocidad, Vector2D aceleracion, double posicionAngular, double velocidadAngular, double aceleracionAngular, Color color) throws DimensionNoValidaException {
-		super(getMatrizPuntos(anchura,altura),posicion,velocidad,aceleracion,posicionAngular, velocidadAngular, aceleracionAngular, EntidadRectangulo.getMasa(anchura, altura), color);
-		this.altura=altura;
-		this.anchura = anchura;
+		this(anchura,altura,posicion,velocidad,aceleracion,posicionAngular,velocidadAngular,aceleracionAngular,0,color);
 	}
 	
 	/**
@@ -88,7 +82,7 @@ public class EntidadRectangulo extends EntidadPoligono {
 	}
 
 	/**
-	 * Devuelve la altura del rectángulo
+	 * Devuelve la altura del rectángulo en píxeles
 	 * 
 	 * @return altura del rectángulo
 	 */
@@ -97,7 +91,7 @@ public class EntidadRectangulo extends EntidadPoligono {
 	}
 
 	/**
-	 * Devuelve la anchura del rectángulo
+	 * Devuelve la anchura del rectángulo en píxeles
 	 * 
 	 * @return anchura del rectángulo
 	 */
@@ -115,8 +109,8 @@ public class EntidadRectangulo extends EntidadPoligono {
 	/**
 	 * Devuelve la masa dada la anchura y la altura
 	 * 
-	 * @param anchura
-	 * @param altura
+	 * @param anchura en píxeles
+	 * @param altura en píxeles
 	 * @return masa
 	 */
 	public static double getMasa (double anchura,double altura) {
@@ -126,9 +120,9 @@ public class EntidadRectangulo extends EntidadPoligono {
 	/**
 	 * Devuelve la matriz de puntos de un rectángulo
 	 * 
-	 * @param anchura 
-	 * @param altura
-	 * @return Matriz de puntos del rectángulo
+	 * @param anchura en píxeles
+	 * @param altura en píxeles
+	 * @return Matriz de puntos del rectángulo con coordenadas en píxeles
 	 */
 	public static Matriz getMatrizPuntos(double anchura, double altura) {
 		return new Matriz(2,4,

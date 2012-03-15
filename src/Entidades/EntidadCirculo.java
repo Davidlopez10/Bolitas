@@ -28,9 +28,8 @@ public class EntidadCirculo extends Entidad {
 	 * @throws DimensionNoValidaException
 	 */
 	public EntidadCirculo(double radio, Vector2D posicion, Vector2D velocidad,
-			Vector2D aceleracion, Color color) throws DimensionNoValidaException {
-		super(posicion, velocidad, aceleracion, EntidadCirculo.getMasa(radio), color);
-		this.radio = radio;
+			Vector2D aceleracion, Color color) {
+		this(radio,posicion,velocidad,aceleracion,0,0,0,0,color);
 	}
 
 	/**
@@ -45,10 +44,8 @@ public class EntidadCirculo extends Entidad {
 	 * @throws DimensionNoValidaException
 	 */
 	public EntidadCirculo(double radio, Vector2D posicion, Vector2D velocidad,
-			Vector2D aceleracion, double masa, Color color)
-			throws DimensionNoValidaException {
-		super(posicion, velocidad, aceleracion, masa, color);
-		this.radio = radio;
+			Vector2D aceleracion, double masa, Color color) {
+		this(radio,posicion,velocidad,aceleracion,0,0,0,0,color);
 	}
 
 	/**
@@ -66,12 +63,8 @@ public class EntidadCirculo extends Entidad {
 	 */
 	public EntidadCirculo(double radio, Vector2D posicion, Vector2D velocidad,
 			Vector2D aceleracion, double posicionAngular,
-			double velocidadAngular, double aceleracionAngular, Color color)
-			throws DimensionNoValidaException {
-		super(posicion, velocidad, aceleracion, posicionAngular,
-				velocidadAngular, aceleracionAngular, EntidadCirculo.getMasa(radio),
-				color);
-		this.radio = radio;
+			double velocidadAngular, double aceleracionAngular, Color color) {
+		this(radio,posicion,velocidad,aceleracion,posicionAngular,velocidadAngular,aceleracionAngular,0,color);
 	}
 	
 	/**
@@ -91,7 +84,7 @@ public class EntidadCirculo extends Entidad {
 	public EntidadCirculo(double radio, Vector2D posicion, Vector2D velocidad,
 			Vector2D aceleracion, double posicionAngular,
 			double velocidadAngular, double aceleracionAngular, double masa,
-			Color color) throws DimensionNoValidaException {
+			Color color) {
 		super(posicion, velocidad, aceleracion, posicionAngular,
 				velocidadAngular, aceleracionAngular, masa, color);
 		this.radio = radio;
@@ -232,6 +225,9 @@ public class EntidadCirculo extends Entidad {
 		return false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#toString()
+	 */
 	@Override
 	public String toString() {
 		return (super.toString() + "\nPelota. Radio: " + this.radio);
@@ -245,5 +241,21 @@ public class EntidadCirculo extends Entidad {
 	 */
 	public static double getMasa(double radio) {
 		return (4 / 3) * Math.PI * Math.pow(radio, 3);
+	}
+
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#tratarColisionEscenarioX()
+	 */
+	@Override
+	public void tratarColisionEscenarioX() {
+		this.getVelocidad().invertirX();
+	}
+
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#tratarColisionEscenarioY()
+	 */
+	@Override
+	public void tratarColisionEscenarioY() {
+		this.getVelocidad().invertirY();
 	}
 }

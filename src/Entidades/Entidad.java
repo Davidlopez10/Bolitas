@@ -13,14 +13,19 @@ import Mates.Vector2D;
 
 /**
  * Esta clase abstracta define entidades para la clase Escenario.
+ * 
+ * 
  * Una entidad es todo objeto que es representado en un escenario definida por (al menos):
- * Posicion, velocidad, aceleracion
- * Posicion velocidad y aceleracion angulares
- * Masa y color.
+ * 
+ * -Posicion, velocidad, aceleracion
+ * 
+ * -Posicion velocidad y aceleracion angulares
+ * 
+ * -Masa y color.
  * 
  * @author Jose Diaz
- *
  */
+
 public abstract class Entidad {
 
 	static final int FACTOR_REDUCCION_VECTORES = 5;
@@ -45,66 +50,33 @@ public abstract class Entidad {
 	/**
 	 *  Constructor básico (se omiten características de giro para la entidad)
 	 * 
-	 * @param posicion 
-	 * @param velocidad 
-	 * @param aceleracion 
-	 * @param masa 
-	 * @param color
-	 * @throws DimensionNoValidaException Si alguno de los vectores posicion, velocidad o aceleracion no tienen 2 componentes
+	 * 
+	 * @param posicion Posicion de la entidad, en píxeles
+	 * @param velocidad Velocidad de la entidad, en píxeles / seg
+	 * @param aceleracion Aceleración de la entidad, en píxeles / seg^2
+	 * @param masa Masa de la entidad
+	 * @param color Color de la entidad
 	 */
 	public Entidad(Vector2D posicion, Vector2D velocidad, Vector2D aceleracion,
-			double masa, Color color) throws DimensionNoValidaException {
-		if (posicion.getDimension() != 2)
-			throw new DimensionNoValidaException(
-					"Vector2D posicion debe ser de dos coordenadas " + posicion);
-		if (velocidad.getDimension() != 2)
-			throw new DimensionNoValidaException(
-					"Vector2D velocidad debe ser de dos coordenadas " + velocidad);
-		if (aceleracion.getDimension() != 2)
-			throw new DimensionNoValidaException(
-					"Vector2D aceleracion debe ser de dos coordenadas "
-							+ aceleracion);
-
-		this.posicion = posicion;
-		this.velocidad = velocidad;
-		this.aceleracion = aceleracion;
-
-		this.masa = masa;
-
-		this.posicionAngular = 0;
-		this.velocidadAngular = 0;
-		this.aceleracionAngular = 0;
-
-		this.colorEntidad = color;
+			double masa, Color color) {
+		this(posicion,velocidad,aceleracion,0,0,0,masa,color);
 	}
 
 	/**
 	 * Constructor de entidades
 	 * 
-	 * @param posicion
-	 * @param velocidad
-	 * @param aceleracion
-	 * @param posicionAngular
-	 * @param velocidadAngular
-	 * @param aceleracionAngular
-	 * @parWam masa
-	 * @param color
-	 * @throws DimensionNoValidaException Si alguno de los vectores posicion, velocidad o aceleracion no tienen 2 componentes
-	 */
+	 * @param posicion Posicion de la entidad, en píxeles
+	 * @param velocidad Velocidad de la entidad, en píxeles / seg
+	 * @param aceleracion Aceleración de la entidad, en píxeles / seg^2
+	 * @param posicionAngular En radianes
+	 * @param velocidadAngular En radianes / seg
+	 * @param aceleracionAngular En radianes / seg ^ 2 
+	 * @param masa Masa de la entidad
+	 * @param color Color de la entidad
+	 * */
 	public Entidad(Vector2D posicion, Vector2D velocidad, Vector2D aceleracion,
 			double posicionAngular, double velocidadAngular,
-			double aceleracionAngular, double masa, Color color)
-			throws DimensionNoValidaException {
-		if (posicion.getDimension() != 2)
-			throw new DimensionNoValidaException(
-					"Vector2D posicion debe ser de dos coordenadas " + posicion);
-		if (velocidad.getDimension() != 2)
-			throw new DimensionNoValidaException(
-					"Vector2D velocidad debe ser de dos coordenadas " + velocidad);
-		if (aceleracion.getDimension() != 2)
-			throw new DimensionNoValidaException(
-					"Vector2D aceleracion debe ser de dos coordenadas "
-							+ aceleracion);
+			double aceleracionAngular, double masa, Color color)  {
 
 		this.posicion = posicion;
 		this.velocidad = velocidad;
@@ -120,16 +92,16 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Devuelve la posicion de la entidad
+	 * Devuelve la posicion de la entidad en píxeles
 	 * 
-	 * @return posicion de la entidad
+	 * @return Posicion de la entidad
 	 */
 	public Vector2D getPosicion() {
 		return posicion;
 	}
 
 	/**
-	 * Cambia la posicion de la entidad
+	 * Cambia la posicion de la entidad en píxeles
 	 * 
 	 * @param posicion Nueva posicion.
 	 */
@@ -138,7 +110,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Devuelve el vector  velocidad de la entidad
+	 * Devuelve el vector  velocidad de la entidad en píxeles/seg
 	 * 
 	 * @return Vector2D velocidad de la entidad
 	 */
@@ -147,7 +119,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Cambia el vector velocidad de la entidad
+	 * Cambia el vector velocidad de la entidad en píxeles/seg
 	 * 
 	 * @param velocidad Nuevo vector entidad
 	 */
@@ -156,7 +128,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Devuelve el vector aceleracion de la entidad
+	 * Devuelve el vector aceleracion de la entidad en píxeles/seg^2
 	 * 
 	 * @return Vector2D aceleracion de la entidad
 	 */
@@ -165,7 +137,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Cambia el vector aceleracion de la entidad
+	 * Cambia el vector aceleracion de la entidad en píxeles/seg^2
 	 * 
 	 * @param aceleracion Nuevo vector aceleracion de la entidad
 	 */
@@ -192,7 +164,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Devuelve la orientacion del objeto
+	 * Devuelve la orientacion del objeto en radianes.
 	 * 
 	 * @return Devuelve el angulo en el que el objeto está orientado en ese momento
 	 */
@@ -201,7 +173,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Establece una nueva orientación para el objeto.
+	 * Establece una nueva orientación para el objeto en radianes.
 	 * 
 	 * @param posicionAngular Nueva posicion angular
 	 */
@@ -212,7 +184,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Devuelve la velocidad angular
+	 * Devuelve la velocidad angular en radianes / seg
 	 * 
 	 * @return velocidad angular de la entidad
 	 */
@@ -221,7 +193,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Nueva velocidad angular
+	 * Nueva velocidad angular en radianes/seg
 	 * 
 	 * @param nuevaVelocidadAngular Nueva velocidad angular
 	 */
@@ -237,7 +209,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Devuelve la aceleracion angular de la entidad
+	 * Devuelve la aceleracion angular de la entidad en radianes/seg^2 
 	 * 
 	 * @return aceleracion angular
 	 */
@@ -246,7 +218,7 @@ public abstract class Entidad {
 	}
 
 	/**
-	 * Establece una nueva velocidad angular para la entidad
+	 * Establece una nueva velocidad angular para la entidad en radianes/seg^2 
 	 * 
 	 * @param nuevaVelocidadAngular nueva velocidad angular
 	 */
@@ -315,28 +287,28 @@ public abstract class Entidad {
 	 * @param dt Laps de tiempo para los cálculos
 	 */
 	public void calcularNuevasPosiciones(double dt) {
-		posicion.setX(posicion.getX() + velocidad.getX() * dt + 1 / 2
-				* aceleracion.getX() * dt * dt);
-		posicion.setY(posicion.getY() + velocidad.getY() * dt + 1 / 2
-				* aceleracion.getY() * dt * dt);
+		posicion.setX(posicion.getX() + velocidad.getX() * dt + 0.5 * aceleracion.getX() * dt * dt);
+		posicion.setY(posicion.getY() + velocidad.getY() * dt + 0.5 * aceleracion.getY() * dt * dt);
+		
 		velocidad.setX(velocidad.getX() + aceleracion.getX() * dt);
 		velocidad.setY(velocidad.getY() + aceleracion.getY() * dt);
 
-		this.setPosicionAngular(this.getPosicionAngular()
-				+ this.getVelocidadAngular() * dt + (1 / 2)
-				* this.getAceleracionAngular() * Math.pow(dt, 2));
-		this.setVelocidadAngular(this.getVelocidadAngular()
-				+ this.getAceleracionAngular() * dt);
+		this.setPosicionAngular( this.getPosicionAngular() + 
+				                 this.getVelocidadAngular() * dt + 
+				                 0.5 * this.getAceleracionAngular() * Math.pow(dt, 2));
+		
+		this.setVelocidadAngular(this.getVelocidadAngular() + 
+				                 this.getAceleracionAngular() * dt);
 	}
 
 	/**
-	 * Pinta la entidad en un gráfico
+	 * Pinta parte de la entidad, en concreto los vectores velocidad y aceleración, en el gráfico.
 	 * 
-	 * @param g gráfico dondep intar la funcion
+	 * @param g gráfico donde pintar la entidad
 	 */
 	public void pintar(Graphics g) {
 		if (this.mostrarVelocidad) {
-			g.setColor(Color.BLUE);
+			g.setColor(COLOR_VECTOR_VELOCIDAD);
 			HerramientasGraficas.dibujarFlecha(posicion, posicion.suma(velocidad), g);
 		}
 		
@@ -366,7 +338,7 @@ public abstract class Entidad {
 	public abstract boolean hayColisionY(int Yinf, int Ysup);
 
 	/**
-	 * Procesa si hay una colision con otra entidad o no.
+	 * Detecta si hay una colision con otra entidad o no.
 	 * 
 	 * @param ent Entidad con la que comprobar si hay o no colision
 	 * @return TRUE si hay colisión con la entidad.
@@ -374,7 +346,7 @@ public abstract class Entidad {
 	public abstract boolean hayColision(Entidad ent);
 
 	/**
-	 * Procesa si hay una colision con alguna entidad en una lista de entidades o no
+	 * Detecta si hay una colision con alguna entidad en una lista de entidades o no
 	 * 
 	 * @param listaEntidades Lista de entidades con las que comprobar si hay o no colsión
 	 * @param n Numero de entidades ocupadas en el vector
@@ -391,18 +363,12 @@ public abstract class Entidad {
 	/**
 	 * Procesa la colision de la entidad con el borde X del escenario
 	 */
-	public void tratarColisionEscenarioX() {
-		this.getVelocidad().invertirX();
-		this.invertirVelocidadAngular();
-	}
+	public abstract void tratarColisionEscenarioX();
 	
 	/**
 	 * Procesa la colision de la entidad con el borde Y del escenario
 	 */
-	public void tratarColisionEscenarioY() {
-		this.getVelocidad().invertirY();
-		this.invertirVelocidadAngular();
-	}
+	public abstract void tratarColisionEscenarioY();
 
 	public static void trataColision(Entidad ent1, Entidad ent2) {
 		if (ent1 instanceof EntidadCirculo) {

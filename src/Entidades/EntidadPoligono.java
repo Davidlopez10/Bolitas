@@ -34,22 +34,12 @@ public class EntidadPoligono extends Entidad {
 	 * @param color
 	 * 
 	 * @throws DimensionNoValidaException Si algun vector posicion, velocidad o aceleracion no tiene 2 componentes o si los puntos de la matriz no tienen 2 componentes.
-	 * @throws PoligonoComplejoException Si los puntos pasados forman un polígono complejo
+	 * @throws PoligonoComplejoException Si los puntos pasados forman un polígono complejo (con lados que se cruzan)
 	 */
 	public EntidadPoligono(Matriz puntos, Vector2D posicion, Vector2D velocidad,
 			Vector2D aceleracion, double masa, Color color)
 			throws IllegalArgumentException {
-		super(posicion, velocidad, aceleracion, masa, color);
-		
-		if (EntidadPoligono.esComplejo(puntos.getDatos()))
-			throw new PoligonoComplejoException(puntos);
-		if (puntos.getFilas() !=2)
-			throw new DimensionNoValidaException("La matriz de puntos debe tener 2 filas");
-		
-		this.n = puntos.getColumnas();
-		this.verticesRelativos = puntos;
-		this.refrescarVertices();
-		this.concavo = EntidadPoligono.esConcavo(this);
+		this(puntos,posicion,velocidad,aceleracion,0,0,0,masa,color);
 	}
 
 	/**
@@ -65,7 +55,7 @@ public class EntidadPoligono extends Entidad {
 	 * @param masa
 	 * @param color
 	 * @throws DimensionNoValidaException Si algun vector posicion, velocidad o aceleracion no tiene 2 componentes o si los puntos de la matriz no tienen 2 componentes.
-	 * @throws PoligonoComplejoException Si los puntos pasados forman un polígono complejo
+	 * @throws PoligonoComplejoException Si los puntos pasados forman un polígono complejo (con lados que se cruzan)
 	 */
 	public EntidadPoligono(Matriz puntos, Vector2D posicion, Vector2D velocidad,
 			Vector2D aceleracion, double posicionAngular,
@@ -100,21 +90,7 @@ public class EntidadPoligono extends Entidad {
 	public EntidadPoligono(Vector2D posicion, Vector2D velocidad, Vector2D aceleracion,
 			double masa, Color color, double[]... puntos)
 			throws IllegalArgumentException {
-		super(posicion, velocidad, aceleracion, masa, color);
-		
-		if (EntidadPoligono.esComplejo(puntos))
-			throw new PoligonoComplejoException(puntos);
-		if (puntos.length != 2)
-			throw new DimensionNoValidaException(
-					"Los puntos de un polígono han de tener 2 coordenads");
-		if (puntos[0].length != puntos[1].length)
-			throw new DimensionNoValidaException(
-					"Se ha de especificar el mismo número de coordenadas X e Y al construir una matriz de puntos");
-		
-		this.verticesRelativos = new Matriz(puntos);
-		this.n = puntos[0].length;
-		this.refrescarVertices();
-		this.concavo = EntidadPoligono.esConcavo(this);
+		this(new Matriz(puntos), posicion,velocidad,aceleracion,masa,color);
 	}
 
 	/**
@@ -136,31 +112,7 @@ public class EntidadPoligono extends Entidad {
 			double posicionAngular, double velocidadAngular,
 			double aceleracionAngular, double masa, Color color,
 			double[]... puntos) throws IllegalArgumentException {
-		super(posicion, velocidad, aceleracion, posicionAngular,
-				velocidadAngular, aceleracionAngular, masa, color);
-		if (EntidadPoligono.esComplejo(puntos))
-			throw new PoligonoComplejoException(puntos);
-		
-		if (puntos.length != 2)
-			throw new DimensionNoValidaException(
-					"Los puntos de un polígono han de tener 2 coordenads");
-		if (puntos[0].length != puntos[1].length)
-			throw new DimensionNoValidaException(
-					"Se ha de especificar el mismo número de coordenadas X e Y al construir una matriz de puntos");
-
-		this.verticesRelativos = new Matriz(puntos);
-		this.n = puntos[0].length;
-		this.refrescarVertices();
-		this.concavo = EntidadPoligono.esConcavo(this);
-	}
-
-	/**
-	 * Devuelve el número de lados del polígono
-	 * 
-	 * @return número de lados del polígono
-	 */
-	public int getNumeroLados() {
-		return this.n;
+		this(new Matriz(puntos), posicion,velocidad,aceleracion,posicionAngular,velocidadAngular,aceleracionAngular,masa,color);
 	}
 
 	/**
@@ -562,6 +514,24 @@ public class EntidadPoligono extends Entidad {
 	 */
 	public static Vector cetroMasa(Matriz puntos) {
 		return centroMasa(puntos.getDatos());
+	}
+
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#tratarColisionEscenarioX()
+	 */
+	@Override
+	public void tratarColisionEscenarioX() {
+		this.getVelocidad().invertirX();
+		this.invertirVelocidadAngular(); 
+	}
+
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#tratarColisionEscenarioY()
+	 */
+	@Override
+	public void tratarColisionEscenarioY() {
+		this.getVelocidad().invertirY();
+		this.invertirVelocidadAngular();
 	}
 	
 

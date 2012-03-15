@@ -5,11 +5,13 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+import Entidades.Entidad;
 import Entidades.EntidadCirculo;
 import Entidades.EntidadPoligono;
 import Entidades.EntidadPoligonoRegular;
 import Entidades.EntidadRectangulo;
 import Exception.ColisionException;
+import Exception.DimensionNoValidaException;
 import Mates.Matriz;
 import Mates.Vector2D;
 
@@ -20,9 +22,6 @@ public class Main {
 	final static int NumExcepcionesHastaParar = 1000;
 
 	public static void main(String args[]) {
-	
-		Vector2D test = new Vector2D(5,5);
-		System.out.println(test.div(2));
 		
 		int numPelotas = 1;
 		double radioPelotas = 5;
@@ -39,19 +38,18 @@ public class Main {
 		ventana.setResizable(false);
 
 		// Creamos un escenario.
-		Escenario escenario = new Escenario(ventana, ANCHO, ALTO, 1000, Color.BLACK,
-				0.002);
-
+		Escenario escenario = new Escenario(ventana, ANCHO, ALTO, 1000, Color.BLACK);
+		
 		ventana.pack();
 		ventana.setVisible(true);
 		
 		Matriz MatrizPuntos1 = new Matriz(2,5,
 				2,-1,-4,-1,-5,
-				1,5,4,1,-2);
+				1, 5, 4, 1,-2);
 		
 		Matriz MatrizPuntos2 = new Matriz(2,7,
-				3,10,5,-3,2,6,8,
-				2,3,7,-4,-1,-5,-1);
+				3,10,5,-3, 2, 6, 8,
+				2,3 ,7,-4,-1,-5,-1);
 		
 		MatrizPuntos1 = MatrizPuntos1.por(10);
 		MatrizPuntos2 = MatrizPuntos2.por(10);
@@ -71,7 +69,23 @@ public class Main {
 
 		Random generadorAleatorio = new Random();
 
-		for (int i = 0; i < numPelotas; i++) {
+		Entidad ent = new EntidadCirculo(
+				radioPelotas*5, 
+				new Vector2D(radioPelotas*5,radioPelotas*5), 
+				new Vector2D(10,0), 
+				new Vector2D(0,0),
+				Color.RED);
+
+		try {
+			escenario.insertarEntidad(ent);
+		} catch (ColisionException e1) {
+			System.out.println("¡Colision!");
+			e1.printStackTrace();
+		}
+		
+		
+		
+		/*for (int i = 0; i < numPelotas; i++) {
 			try {
 				escenario.insertarEntidad(new EntidadCirculo(radioPelotas*5, new Vector2D(
 						Math.random() * ANCHO, Math.random() * ALTO),
@@ -82,7 +96,7 @@ public class Main {
 			} catch (ColisionException e1) {
 				entidadesNoSpawneadas++;
 			}
-		}
+		}*/
 		while (entidadesNoSpawneadas > 0) {
 			try {
 				escenario.insertarEntidad(new EntidadCirculo(radioPelotas, new Vector2D(
