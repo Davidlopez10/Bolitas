@@ -119,7 +119,7 @@ public class EntidadCirculo extends Entidad {
 	 * @see Entidades.Entidad#pintar(java.awt.Graphics)
 	 */
 	public void pintar(Graphics g) {
-		g.setColor(color);
+		g.setColor(colorEntidad);
 		g.fillOval( (int) Math.round(posicion.getX() - radio),
 				    (int) Math.round(posicion.getY() - radio),
 				    2 * (int) Math.round(radio), 

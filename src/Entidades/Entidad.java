@@ -24,6 +24,8 @@ import Mates.Vector2D;
 public abstract class Entidad {
 
 	static final int FACTOR_REDUCCION_VECTORES = 5;
+	static final Color COLOR_VECTOR_VELOCIDAD = Color.BLUE;
+	static final Color COLOR_VECTOR_ACELERACION = Color.RED;
 	
 	protected Vector2D posicion;
 	protected Vector2D velocidad;
@@ -38,7 +40,7 @@ public abstract class Entidad {
 
 	protected double masa;
 
-	protected Color color;
+	protected Color colorEntidad;
 
 	/**
 	 *  Constructor básico (se omiten características de giro para la entidad)
@@ -73,7 +75,7 @@ public abstract class Entidad {
 		this.velocidadAngular = 0;
 		this.aceleracionAngular = 0;
 
-		this.color = color;
+		this.colorEntidad = color;
 	}
 
 	/**
@@ -114,7 +116,7 @@ public abstract class Entidad {
 		this.velocidadAngular = velocidadAngular;
 		this.aceleracionAngular = aceleracionAngular;
 
-		this.color = color;
+		this.colorEntidad = color;
 	}
 
 	/**
@@ -258,7 +260,7 @@ public abstract class Entidad {
 	 * @return color de la entidad
 	 */
 	public Color getColor() {
-		return this.color;
+		return this.colorEntidad;
 	}
 
 	/**
@@ -267,7 +269,7 @@ public abstract class Entidad {
 	 * @param nuevoColor nuevo color.
 	 */
 	public void setColor(Color nuevoColor) {
-		this.color = nuevoColor;
+		this.colorEntidad = nuevoColor;
 	}
 	
 	/**
@@ -478,7 +480,7 @@ public abstract class Entidad {
 	public String toString() {
 		return ("Entidad: \nPosicion: " + posicion + " \nVelocidad: "
 				+ velocidad + " \nAceleracion " + aceleracion + " \nColor "
-				+ color + "\n Masa: " + this.masa);
+				+ colorEntidad + "\n Masa: " + this.masa);
 	}
 }
 

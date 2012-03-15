@@ -11,7 +11,7 @@ import Entidades.Entidad;
 import Exception.ColisionException;
 
 // TODO: Implementar FPS constantes (o tiempo interno constante idnependiente dela velocida de cpu)
-// TODO: Interfaz gráfica para insertar y eliminar obhetos
+// TODO: Interfaz gráfica para insertar y eliminar objetos
 // TODO: Métodos para eliminar objetos
 
 /**
@@ -24,6 +24,8 @@ import Exception.ColisionException;
 @SuppressWarnings("serial")
 public class Escenario extends JComponent {
 
+	static final int TICKS_POR_SEGUNDO = 60;
+	
 	private int alto;
 	private int ancho;
 
@@ -32,6 +34,8 @@ public class Escenario extends JComponent {
 	private Entidad[] listaEntidades;
 
 	private Color colorFondo;
+	
+	private boolean enMovimiento = false;
 
 	/*
 	 *  Determina la velocidad de la animacion (un valor más alto equivale a una
@@ -214,9 +218,52 @@ public class Escenario extends JComponent {
 	 * indefinidamente.
 	 */
 	public void accion() {
-		while (true) {
-			calculaFisica(dt);
-			dibuja();
+	
+		enMovimiento = true;
+	
+		long ultimaVez = System.nanoTime();
+		double sinProcesar = 0;
+		double nanosegundosPorTick = 1000000000.0 / TICKS_POR_SEGUNDO;
+		int fotogramas = 0;
+		int ticks = 0;
+		long tiempoTemporal = System.currentTimeMillis();
+		
+		while (enMovimiento) {
+			
+			long estaVez = System.nanoTime();
+			sinProcesar += (estaVez - ultimaVez) / nanosegundosPorTick;
+			ultimaVez = estaVez;
+			boolean hayQueRenderizar = true;
+			
+			while (sinProcesar >= 1) {
+				ticks++;
+				calculaFisica(dt*10);
+				sinProcesar -= 1;
+				hayQueRenderizar = true;
+			}
+	
+			try {
+				Thread.sleep(2);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	
+			if (hayQueRenderizar) {
+				fotogramas++;
+				dibuja();
+			}
+	
+			if (System.currentTimeMillis() - tiempoTemporal > 1000) {
+				tiempoTemporal += 1000;
+				System.out.println(ticks + " ticks, " + fotogramas + " fps");
+				fotogramas = 0;
+				ticks = 0;
+			}
 		}
 	}
+	
+	public void detener() {
+		enMovimiento = false;
+	}
+
 }
