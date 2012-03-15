@@ -21,7 +21,7 @@ public class Main {
 		final int ALTO = 600;
 		final int NumExcepcionesHastaParar = 1000;
 
-		int numPelotas = 10;
+		int numPelotas = 2;
 		double radioPelotas = 10;
 		int numExcepcionesProducidas = 0;
 		int entidadesNoSpawneadas = 0;
@@ -52,7 +52,7 @@ public class Main {
 		
 		MatrizPuntos1 = MatrizPuntos1.por(10);
 		MatrizPuntos2 = MatrizPuntos2.por(10);
-
+/*
 		try {
 			escenario.insertarEntidad(new EntidadRectangulo(50, 70, new Vector2D(100,
 					100), new Vector2D(200,100), new Vector2D(0, 0), 0,
@@ -64,7 +64,7 @@ public class Main {
 			escenario.insertarEntidad(new EntidadPoligono(MatrizPuntos2, new Vector2D(200,500), new Vector2D(650,400), new Vector2D(0,0),40.0,55.0,0.0, 0,Color.MAGENTA));
 		} catch (ColisionException e) {
 			System.out.println("La entidad" + e.getEntidad() + " no se pudo spawnear por colision.");
-		}
+		}*/
 
 		Random generadorAleatorio = new Random();
 
@@ -73,7 +73,7 @@ public class Main {
 				escenario.insertarEntidad(new EntidadCirculo(radioPelotas*5, new Vector2D(
 						Math.random() * ANCHO, Math.random() * ALTO),
 						new Vector2D(2000 * Math.random(), 2000 * Math.random()),
-						new Vector2D(0, 0), new Color(generadorAleatorio
+						new Vector2D(0, 1000), new Color(generadorAleatorio
 								.nextInt(255), generadorAleatorio.nextInt(255),
 								generadorAleatorio.nextInt(255))));
 			} catch (ColisionException e1) {
@@ -84,7 +84,7 @@ public class Main {
 			try {
 				escenario.insertarEntidad(new EntidadCirculo(radioPelotas, new Vector2D(
 						Math.random() * ANCHO, Math.random() * ALTO),
-						new Vector2D(20 * Math.random(), 20 * Math.random()),
+						new Vector2D(200 * Math.random(), 200 * Math.random()),
 						new Vector2D(0, 0), Color.RED));
 				entidadesNoSpawneadas--;
 			} catch (Exception e) {

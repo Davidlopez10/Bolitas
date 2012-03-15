@@ -120,14 +120,16 @@ public class EntidadCirculo extends Entidad {
 	 */
 	public void pintar(Graphics g) {
 		g.setColor(color);
-		try {
-			g.fillOval((int) Math.round(posicion.getX() - radio),
-					(int) Math.round(posicion.getY() - radio),
-					2 * (int) Math.round(radio), 2*(int) Math.round(radio));
-		} catch (DimensionNoValidaException e) {
-			// No debería pasar nunca ya que comprobamos al contruir la Entidad
-			e.printStackTrace();
-		}
+		g.fillOval( (int) Math.round(posicion.getX() - radio),
+				    (int) Math.round(posicion.getY() - radio),
+				    2 * (int) Math.round(radio), 
+				    2*(int) Math.round(radio)
+				  );
+		g.drawLine( (int) posicion.getX(), 
+				    (int) posicion.getY(),
+				    (int) (posicion.getX() + velocidad.div(180/radio).getX()), 
+				    (int) (posicion.getY() + velocidad.div(180/radio).getY())
+				  );
 	}
 	
 	/* (non-Javadoc)
