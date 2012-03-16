@@ -359,12 +359,12 @@ public abstract class Entidad {
 		
 		if (mostrarVelocidadAngular) {
 			g.setColor(COLOR_VELOCIDAD_ANGULAR);
-			HerramientasGraficas.dibujarEspiral(posicion, velocidadAngular/5, g);
+			HerramientasGraficas.dibujarEspiral(posicion, velocidadAngular/10, g);
 		}
 		
 		if (mostrarAceleracionAngular) {
 			g.setColor(COLOR_ACELERACION_ANGULAR);
-			HerramientasGraficas.dibujarEspiral(posicion, aceleracionAngular, g);
+			HerramientasGraficas.dibujarEspiral(posicion, aceleracionAngular/10, g);
 		}
 	}
 

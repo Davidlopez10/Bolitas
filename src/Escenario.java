@@ -209,7 +209,7 @@ public class Escenario extends JComponent {
 			}
 	
 			try {
-				Thread.sleep(2);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

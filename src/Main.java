@@ -56,7 +56,7 @@ public class Main {
 
 		try {
 			escenario.insertarEntidad(new EntidadRectangulo(50, 70, new Vector2D(100,100), new Vector2D(0,0), new Vector2D(50, 50), 0,
-		    		0, 2, Color.BLUE));
+		    		0, 2, Color.GREEN));
 			/*escenario.insertarEntidad(new EntidadPoligonoRegular(4, 30, new Vector2D(
 					300, 300), new Vector2D(100,700), new Vector2D(0, 0), 0,
 					2 * Math.PI, 0, 0, Color.GREEN));*/
