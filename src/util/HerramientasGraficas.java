@@ -7,8 +7,10 @@ import Mates.Vector2D;
 
 public class HerramientasGraficas {
 
-	static final int SEGMENTOS_POR_VUELTA = 60;
+	static final int SEGMENTOS_POR_VUELTA = 20;
+	static final int MAXIMAS_VUELTAS_ESPIRAL = 10;
 	
+	static final int MAXIMA_NORMA_VECTOR = 50;
 		
 	/**
 	 * Dibuja una flecha desde el punto origen, hasta destino
@@ -17,14 +19,25 @@ public class HerramientasGraficas {
 	 * @param destino Destino o fin de la flecha
 	 * @param g Gráfico donde se dibujará
 	 */
-	
 	public static void dibujarFlecha(Vector2D origen, Vector2D destino, Graphics g) {	
-		Vector2D vector = destino.resta(origen).mult(0.8);
-		Matriz giro1 = Matriz.getMatriz2x2Giro(-Math.PI/28);
-		Matriz giro2 = Matriz.getMatriz2x2Giro(Math.PI/28);
+		Vector2D vector = destino.resta(origen).mult(0.9);
+		Matriz giro1 = Matriz.getMatriz2x2Giro(-Math.PI/100);
+		Matriz giro2 = Matriz.getMatriz2x2Giro(Math.PI/100);
 		
 		Vector2D vertice1 = new Vector2D(giro1.por(vector).suma(origen));
-		Vector2D vertice2 = new Vector2D(giro2.por(vector).suma(origen));
+		Vector2D vertice2 = new Vector2D(giro2.por(vector).suma(origen));;
+		
+		// Si la flecha es demasiado grande, no agrandamos más el tamaño de las líneas que forman la flecha.
+		if (destino.resta(origen).norma() > MAXIMA_NORMA_VECTOR) {
+			Vector2D vertice1RelativoADestino = destino.resta(vertice1);
+			Vector2D vertice2RelativoADestino = destino.resta(vertice2);
+			
+			vertice1RelativoADestino = vertice1RelativoADestino.normalizar().mult(-20);
+			vertice2RelativoADestino = vertice2RelativoADestino.normalizar().mult(-20);
+			
+			vertice1 = vertice1RelativoADestino.suma(destino);
+			vertice2 = vertice2RelativoADestino.suma(destino);
+		}
 		
 		g.drawLine( 
 				      (int) origen.getX(),
@@ -56,10 +69,15 @@ public class HerramientasGraficas {
 	 * @param g Gráfico donde se dibujará la espiral.
 	 */
 	public static void dibujarEspiral(Vector2D centro, double magnitud, Graphics g) {
-		System.out.println("Dibujando espiral en centro: " + centro);
+		
 		// Parametro de la curva en paramétricas. Empezamos en 2 Pi para no empezar pegados al centro de la entidad.
 		double t;
 		double incremento;
+		
+		if (Math.abs(magnitud) > MAXIMAS_VUELTAS_ESPIRAL) {
+			magnitud = Math.signum(magnitud) * MAXIMAS_VUELTAS_ESPIRAL;
+		}
+		
 		if (magnitud >0) {
 			t = 2*Math.PI; 
 			incremento = 2*Math.PI / SEGMENTOS_POR_VUELTA;
@@ -70,10 +88,10 @@ public class HerramientasGraficas {
 		}
 		
 		Vector2D inicio = new Vector2D(t*Math.cos(t),t*Math.sin(t));
-		inicio.suma(centro);
+		inicio = inicio.suma(centro);
 		t += incremento;
 		Vector2D fin = new Vector2D(t*Math.cos(t),t*Math.sin(t));
-		fin.suma(centro);
+		fin = fin.suma(centro);
 		
 		for (int i=0; i< Math.abs((magnitud / 2*Math.PI) * SEGMENTOS_POR_VUELTA); i++) {
 			g.drawLine(
@@ -83,10 +101,12 @@ public class HerramientasGraficas {
 					   (int) fin.getY()
 					   );			
 			inicio.setXY(t*Math.cos(t), t*Math.sin(t));
-			inicio.suma(centro);
+			inicio = inicio.suma(centro);
 			t += incremento;
 			fin.setXY(t*Math.cos(t), t*Math.sin(t));
-			fin.suma(centro);
+			fin = fin.suma(centro);
 		}
+		
+		
 	}
 }
