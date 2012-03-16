@@ -32,6 +32,8 @@ public abstract class Entidad {
 	static final int FACTOR_REDUCCION_VECTORES = 5;
 	static final Color COLOR_VECTOR_VELOCIDAD = Color.BLUE;
 	static final Color COLOR_VECTOR_ACELERACION = Color.RED;
+	static final Color COLOR_VELOCIDAD_ANGULAR = Color.BLUE;
+	static final Color COLOR_ACELERACION_ANGULAR = Color.RED;
 	
 	protected Vector2D posicion;
 	protected Vector2D velocidad;
@@ -43,6 +45,8 @@ public abstract class Entidad {
 	
 	protected boolean mostrarVelocidad = true;
 	protected boolean mostrarAceleracion = true;
+	protected boolean mostrarVelocidadAngular = true;
+	protected boolean mostrarAceleracionAngular = true;
 
 	protected double masa;
 
@@ -264,6 +268,24 @@ public abstract class Entidad {
 	}
 	
 	/**
+	 * Devuelve true si actualmente se esta mostrando la velocidad angular de esta entidad por pantalla. False en otro caso.
+	 * 
+	 * @return true si actualmente se esta mostrando la velocidad angular de esta entidad por pantalla. False en otro caso.
+	 */
+	public boolean getMostrandoVelocidadAngular() {
+		return mostrarVelocidadAngular;
+	}
+	
+	/**
+	 * Devuelve true si actualmente se esta mostrando la aceleracion angular de esta entidad por pantalla. False en otro caso.
+	 * 
+	 * @return true si actualmente se esta mostrando la aceleracion angular de esta entidad por pantalla. False en otro caso.
+	 */
+	public boolean getMostrandoAceleracionAngular() {
+		return mostrarAceleracionAngular;
+	}
+	
+	/**
 	 * Establece si mostrar o no el vector velocidad por pantalla
 	 * 
 	 * @param b True para mostrar el vector velocidad por pantalla, false para ocultarlo.
@@ -281,6 +303,23 @@ public abstract class Entidad {
 		mostrarAceleracion = b;
 	}
 	
+	/**
+	 * Establece si mostrar o no la velocidad angular por pantalla
+	 * 
+	 * @param b True para mostrar la velocidad angular por pantalla, false para ocultarlo.
+	 */
+	public void setMostrarVelocidadAngular(boolean b) {
+		mostrarVelocidadAngular = b;
+	}
+	
+	/**
+	 * Establece si mostrar o no la aceleracion angular por pantalla
+	 * 
+	 * @param b True para mostrar la aceleracion angular por pantalla, false para ocultarlo.
+	 */
+	public void setMostrarAceleracionAngular(boolean b) {
+		mostrarAceleracionAngular = b;
+	}
 
 	/**
 	 * Dado un lapso de tiempo, actualiza las posiciones y las velocidades de la entidad
@@ -308,14 +347,24 @@ public abstract class Entidad {
 	 * @param g gráfico donde pintar la entidad
 	 */
 	public void pintar(Graphics g) {
-		if (this.mostrarVelocidad) {
+		if (mostrarVelocidad) {
 			g.setColor(COLOR_VECTOR_VELOCIDAD);
 			HerramientasGraficas.dibujarFlecha(posicion, posicion.suma(velocidad), g);
 		}
 		
-		if (this.mostrarAceleracion) {
-			g.setColor(Color.RED);
+		if (mostrarAceleracion) {
+			g.setColor(COLOR_VECTOR_ACELERACION);
 			HerramientasGraficas.dibujarFlecha(posicion, posicion.suma(aceleracion), g);
+		}
+		
+		if (mostrarVelocidadAngular) {
+			g.setColor(COLOR_VELOCIDAD_ANGULAR);
+			HerramientasGraficas.dibujarEspiral(posicion, velocidadAngular, g);
+		}
+		
+		if (mostrarAceleracionAngular) {
+			g.setColor(COLOR_ACELERACION_ANGULAR);
+			HerramientasGraficas.dibujarEspiral(posicion, aceleracionAngular, g);
 		}
 	}
 

@@ -57,6 +57,16 @@ public class Vector2D extends Vector{
 		set(1,nuevoValor);
 	}
 	
+	/**
+	 * Establece nuevos valores para X e Y
+	 * 
+	 * @param nuevaX nuevo valor para la X
+	 * @param nuevaY nuevo valor para la Y
+	 */
+	public void setXY(double nuevaX, double nuevaY) {
+		set(0,nuevaX);
+		set(1,nuevaY);
+	}
 	
 	/**
 	 * Cmabia el signo de la componente X (la primera) del vector 

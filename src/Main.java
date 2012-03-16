@@ -23,7 +23,7 @@ public class Main {
 
 	public static void main(String args[]) {
 		
-		int numPelotas = 1;
+		int numPelotas = 0;
 		double radioPelotas = 5;
 		int numExcepcionesProducidas = 0;
 		int entidadesNoSpawneadas = 0;
@@ -54,25 +54,25 @@ public class Main {
 		MatrizPuntos1 = MatrizPuntos1.por(10);
 		MatrizPuntos2 = MatrizPuntos2.por(10);
 
-		/*try {
+		try {
 			escenario.insertarEntidad(new EntidadRectangulo(50, 70, new Vector2D(100,
 					100), new Vector2D(200,100), new Vector2D(0, 0), 0,
 		    		6, 0, Color.BLUE));
-			escenario.insertarEntidad(new EntidadPoligonoRegular(4, 30, new Vector2D(
+			/*escenario.insertarEntidad(new EntidadPoligonoRegular(4, 30, new Vector2D(
 					300, 300), new Vector2D(100,700), new Vector2D(0, 0), 0,
-					2 * Math.PI, 0, 0, Color.GREEN));
-			escenario.insertarEntidad(new EntidadPoligono(MatrizPuntos1, new Vector2D(600,100), new Vector2D(700,320), new Vector2D(0,0),40.0,55.0,0.0, 0,Color.CYAN));
-			escenario.insertarEntidad(new EntidadPoligono(MatrizPuntos2, new Vector2D(200,500), new Vector2D(650,400), new Vector2D(0,0),40.0,55.0,0.0, 0,Color.MAGENTA));
+					2 * Math.PI, 0, 0, Color.GREEN));*/
+			//escenario.insertarEntidad(new EntidadPoligono(MatrizPuntos1, new Vector2D(600,100), new Vector2D(700,320), new Vector2D(0,0),40.0,55.0,0.0, 0,Color.CYAN));
+			//escenario.insertarEntidad(new EntidadPoligono(MatrizPuntos2, new Vector2D(200,500), new Vector2D(650,400), new Vector2D(0,0),40.0,55.0,0.0, 0,Color.MAGENTA));
 		} catch (ColisionException e) {
 			System.out.println("La entidad" + e.getEntidad() + " no se pudo spawnear por colision.");
-		}*/
+		}
 
 		Random generadorAleatorio = new Random();
 
-		Entidad ent = new EntidadCirculo(
+		/*Entidad ent = new EntidadCirculo(
 				radioPelotas*5, 
 				new Vector2D(radioPelotas*5,radioPelotas*5), 
-				new Vector2D(10,0), 
+				new Vector2D(100,0), 
 				new Vector2D(0,0),
 				Color.RED);
 
@@ -81,7 +81,7 @@ public class Main {
 		} catch (ColisionException e1) {
 			System.out.println("¡Colision!");
 			e1.printStackTrace();
-		}
+		}*/
 		
 		
 		
