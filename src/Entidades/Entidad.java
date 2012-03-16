@@ -349,7 +349,7 @@ public abstract class Entidad {
 	/**
 	 * Detecta si hay una colision con alguna entidad en una lista de entidades o no
 	 * 
-	 * @param listaEntidades Lista de entidades con las que comprobar si hay o no colsión
+	 * @param listaEntidades Lista de entidades con las que comprobar si hay o no colisión
 	 * @param n Numero de entidades ocupadas en el vector
 	 * @return Primera entidad de la lista con la que colisiona, o null si no colisiona con ninguna.
 	 */
@@ -361,6 +361,12 @@ public abstract class Entidad {
 		return null;
 	}
 	
+	/**
+	 * Detecta si hay una colision con alguna entidad en una lista de entidades o no
+	 * 
+	 * @param listaEntidades Vector de entidades con las que comprobar si hay o no colisión
+	 * @return Primera entidad de la lista con la que colisiona, o null si no colisiona con ninguna.
+	 */
 	public Entidad hayColision(java.util.Vector<Entidad> listaEntidades) {
 		for (int i=0; i<listaEntidades.size(); i++)
 			if (this.hayColision(listaEntidades.get(i))) {
