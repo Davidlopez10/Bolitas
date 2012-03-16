@@ -23,8 +23,8 @@ public class Main {
 
 	public static void main(String args[]) {
 		
-		int numPelotas = 0;
-		double radioPelotas = 5;
+		int numPelotas = 100;
+		double radioPelotas = 0.5;
 		int numExcepcionesProducidas = 0;
 		int entidadesNoSpawneadas = 0;
 		
@@ -84,7 +84,7 @@ public class Main {
 		
 		
 		
-		/*for (int i = 0; i < numPelotas; i++) {
+		for (int i = 0; i < numPelotas; i++) {
 			try {
 				escenario.insertarEntidad(new EntidadCirculo(radioPelotas*5, new Vector2D(
 						Math.random() * ANCHO, Math.random() * ALTO),
@@ -95,7 +95,7 @@ public class Main {
 			} catch (ColisionException e1) {
 				entidadesNoSpawneadas++;
 			}
-		}*/
+		}
 		while (entidadesNoSpawneadas > 0) {
 			try {
 				escenario.insertarEntidad(new EntidadCirculo(radioPelotas, new Vector2D(

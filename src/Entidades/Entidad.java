@@ -43,10 +43,10 @@ public abstract class Entidad {
 	protected double velocidadAngular;
 	protected double aceleracionAngular;
 	
-	protected boolean mostrarVelocidad = true;
-	protected boolean mostrarAceleracion = true;
-	protected boolean mostrarVelocidadAngular = true;
-	protected boolean mostrarAceleracionAngular = true;
+	protected boolean mostrarVelocidad = false;
+	protected boolean mostrarAceleracion = false;
+	protected boolean mostrarVelocidadAngular = false;
+	protected boolean mostrarAceleracionAngular = false;
 
 	protected double masa;
 

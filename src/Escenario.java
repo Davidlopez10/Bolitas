@@ -22,7 +22,7 @@ import Exception.ColisionException;
 @SuppressWarnings("serial")
 public class Escenario extends JComponent {
 
-	static final int TICKS_POR_SEGUNDO = 60;
+	static final int TICKS_Y_FPS_POR_SEGUNDO = 60;
 	
 	private int alto;
 	private int ancho;
@@ -189,7 +189,7 @@ public class Escenario extends JComponent {
 	
 		long ultimaVez = System.nanoTime();
 		double sinProcesar = 0;
-		double nanosegundosPorTick = 1000000000.0 / TICKS_POR_SEGUNDO;
+		double nanosegundosPorTick = 1000000000.0 / TICKS_Y_FPS_POR_SEGUNDO;
 		int fotogramas = 0;
 		int ticks = 0;
 		long tempMostrarInfo = System.currentTimeMillis();
@@ -199,24 +199,32 @@ public class Escenario extends JComponent {
 			long estaVez = System.nanoTime();
 			sinProcesar += (estaVez - ultimaVez) / nanosegundosPorTick;
 			ultimaVez = estaVez;
-			boolean hayQueRenderizar = true;
+			boolean hayQueRenderizar = false;
 			
 			while (sinProcesar > 0) {
 				ticks++;
-				calculaFisica(1.0/TICKS_POR_SEGUNDO);
+				calculaFisica(1.0/TICKS_Y_FPS_POR_SEGUNDO);
 				sinProcesar--;
 				hayQueRenderizar = true;
 			}
 	
-			try {
+			/*try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
-			}
+			}*/
 	
 			if (hayQueRenderizar) {
 				fotogramas++;
 				dibuja();
+			}
+			
+			if (!hayQueRenderizar && sinProcesar <= 0) {
+				try {
+					Thread.sleep(1000/TICKS_Y_FPS_POR_SEGUNDO);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 	
 			if (System.currentTimeMillis() - tempMostrarInfo > 1000) {
