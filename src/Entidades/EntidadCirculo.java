@@ -258,4 +258,61 @@ public class EntidadCirculo extends Entidad {
 	public void tratarColisionEscenarioY() {
 		this.getVelocidad().invertirY();
 	}
+	
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#tratarColision(Entidades.Entidad)
+	 */
+	public void tratarColision(Entidad e) throws EntidadDesconocidaException {
+		if (e instanceof EntidadCirculo) {
+			tratarColision((EntidadCirculo) e);
+		}
+		else if (e instanceof EntidadPoligono) {
+			tratarColision((EntidadPoligono) e);
+		}
+		
+		throw new EntidadDesconocidaException(e);
+	}
+
+	
+	/**
+	 * Trata colisiones de la entidad con un círculo
+	 * 
+	 * @param circulo Círculo con el que tratar la colision
+	 */
+	private void tratarColision(EntidadCirculo circulo) {
+		try {
+			Vector2D choque1a2 = this.getPosicion().resta(circulo.getPosicion());
+			Vector2D choque2a1 = circulo.getPosicion().resta(this.getPosicion());
+
+			Vector2D velde1a2 = (this.getVelocidad().proyectarSobre(choque1a2));
+			Vector2D velde2a1 = (circulo.getVelocidad().proyectarSobre(choque2a1));
+
+			Vector2D Vel1Final = this.getVelocidad().suma(velde2a1).resta(velde1a2);
+			Vector2D Vel2Final = circulo.getVelocidad().suma(velde1a2).resta(velde2a1);
+
+			this.setVelocidad(Vel1Final);
+			circulo.setVelocidad(Vel2Final);
+		} catch (ArithmeticException e) {
+			// Podría pasar si un objeto colisiona consigo mismo...
+			System.out.println("Posíblemente un objeto colisionó consigo mismo (?)");
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// TODO: Implementar convenientemente.
+	/**
+	 * Trata colisiones de la entidad con polígonos
+	 * 
+	 * @param polig Polígono con el que tratar la colisión
+	 */
+	private void tratarColision(EntidadPoligono polig) {
+		this.invertirVelocidadAngular();
+		this.getVelocidad().invertirX();
+		this.getVelocidad().invertirY();
+		polig.invertirVelocidadAngular();
+		polig.getVelocidad().invertirX();
+		polig.getVelocidad().invertirY();
+	}
 }

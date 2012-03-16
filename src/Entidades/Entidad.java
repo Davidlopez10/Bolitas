@@ -7,6 +7,7 @@ import java.util.Vector;
 import util.HerramientasGraficas;
 
 import Exception.DimensionNoValidaException;
+import Exception.EntidadDesconocidaException;
 import Mates.Vector2D;
 
 // TODO: Modificar colisiones para que usen masa
@@ -392,8 +393,9 @@ public abstract class Entidad {
 	 * 
 	 * @param ent Entidad con la que comprobar si hay o no colision
 	 * @return TRUE si hay colisión con la entidad.
+	 * @throws EntidadDesconocidaException Si no se ha implementado un método para detectar colisiones con tal tipo de entidad
 	 */
-	public abstract boolean hayColision(Entidad ent);
+	public abstract boolean hayColision(Entidad ent) throws EntidadDesconocidaException ;
 
 	/**
 	 * Detecta si hay una colision con alguna entidad en una lista de entidades o no
@@ -409,6 +411,14 @@ public abstract class Entidad {
 
 		return null;
 	}
+	
+	/**
+	 * Trata la colision con otra entidad, cambiando los vectores velocidad (y posicion si es necesario, aunque no debería) adecaudamente.
+	 * 
+	 * @param ent Otra entidad con la que la entidad llamada está colisionando.
+	 * @throws EntidadDesconocidaException Si no se ha implementado un método para tratar colisiones con tal tipo de entidad.
+	 */
+	public abstract void tratarColision(Entidad ent) throws EntidadDesconocidaException ;
 	
 	/**
 	 * Detecta si hay una colision con alguna entidad en una lista de entidades o no
