@@ -125,72 +125,90 @@ public class EntidadCirculo extends Entidad {
 	 * @see Entidades.Entidad#hayColision(Entidades.Entidad)
 	 */
 	@Override
-	public boolean hayColision(Entidad entidad) throws EntidadDesconocidaException {
-		if (entidad instanceof EntidadCirculo) {
-			EntidadCirculo entPelota = (EntidadCirculo) entidad;
-			
-			double distancia = this.getPosicion().distanciaA(entPelota.getPosicion());
-			
-			if (this.getRadio() + entPelota.getRadio() > distancia)
-				return true;
-			else
-				return false;
-		} 
-		
-		else if (entidad instanceof EntidadPoligono) {
-			EntidadPoligono entPolig = (EntidadPoligono) entidad;
-			int n = entPolig.getNumeroVertices();
-
-			// Comprobamos si contiene a los vértices
-			for (int i=0; i < n; i++) {
-				if (this.contiene(entPolig.getVerticeAbsoluto(i)))
-					return true;
-			}	
-			
-			// Comprobamos si contiene al centro
-			if (entPolig.contiene(this.getPosicion()))
-				return true;
-			
-			// Comprobamos si contiene una parte del segmento:
-			try {
-				for (int i=0; i<n; i++) {
-					
-					Vector2D primerVer = entPolig.getVerticeAbsoluto(i);
-					Vector2D segunVer  = entPolig.getVerticeAbsoluto((i+1)%n);
-					
-					Vector2D vectorSegmento = new Vector2D(primerVer, segunVer);
-					Vector2D verticeCentro = new Vector2D(primerVer,this.getPosicion());
-					
-					Vector2D normal = verticeCentro.resta(verticeCentro.proyectarSobre(vectorSegmento));
-					if (normal.norma() < this.getRadio()) {
-						// La normal a la recta que determina el segmento es menor que el radio del circulo
-						// Pero aun nos falta comprobar que la proyeccion del circulo en la recta cae
-						// dentro del segmento
-						
-						normal.invertirX();
-						normal.invertirY();
-						Vector2D puntoProyectado = this.getPosicion().suma(normal);
-						
-						// TODO: Optimizar
-						if (puntoProyectado.distanciaA(primerVer) + puntoProyectado.distanciaA(segunVer)
-							==
-							primerVer.distanciaA(segunVer)
-							) 
-							{
-								return true;
-							}
-							
-					}
-
-				}
-			} catch (ArithmeticException e) {
-				// Un vértice del polígono coincide con el centro del circulo ?¿?¿
-				return true;
-			} 			
-			return false;
-		} else {
-			throw new EntidadDesconocidaException("Imposible procesar colision con entidad desconocida" , entidad);
+	public boolean hayColision(Entidad ent) throws EntidadDesconocidaException {
+		if (ent instanceof EntidadCirculo) {
+			return hayColision((EntidadCirculo) ent);
 		}
+		else if (ent instanceof EntidadPoligono) {
+			return hayColision((EntidadPoligono) ent);
+		}
+		else {
+			throw new EntidadDesconocidaException(ent);
+		}
+	}
+	
+	/**
+	 * Devuelve si hay colision o no con una círculo
+	 * 
+	 * @param circulo Círculo con el que comprobar si hay colision o no
+	 * @return TRUE si colisina, false en otro caso.
+	 */
+	private boolean hayColision(EntidadCirculo circulo) {	
+		
+		double distancia = this.getPosicion().distanciaA(circulo.getPosicion());
+		
+		if (this.getRadio() + circulo.getRadio() > distancia)
+			return true;
+		else
+			return false;	
+	}
+	
+	/**
+	 * Devuelve si hay colision o no con un polígono	
+	 * 
+	 * @param polig Polígono con el que colisiona
+	 * @return TRUE si colisina, false en otro caso.
+	 */
+	private boolean hayColision(EntidadPoligono polig) {
+		int n = polig.getNumeroVertices();
+
+		// Comprobamos si contiene a los vértices
+		for (int i=0; i < n; i++) {
+			if (this.contiene(polig.getVerticeAbsoluto(i)))
+				return true;
+		}	
+		
+		// Comprobamos si contiene al centro
+		if (polig.contiene(this.getPosicion()))
+			return true;
+		
+		// Comprobamos si contiene una parte del segmento:
+		try {
+			for (int i=0; i<n; i++) {
+				
+				Vector2D primerVer = polig.getVerticeAbsoluto(i);
+				Vector2D segundoVer  = polig.getVerticeAbsoluto((i+1)%n);
+				
+				Vector2D vectorSegmento = new Vector2D(primerVer, segundoVer);
+				Vector2D verticeCentro = new Vector2D(primerVer,this.getPosicion());
+				
+				Vector2D normal = verticeCentro.resta(verticeCentro.proyectarSobre(vectorSegmento));
+				if (normal.norma() < this.getRadio()) {
+					// La normal a la recta que determina el segmento es menor que el radio del circulo
+					// Pero aun nos falta comprobar que la proyeccion del circulo en la recta cae
+					// dentro del segmento
+					
+					normal.invertirX();
+					normal.invertirY();
+					Vector2D puntoProyectado = this.getPosicion().suma(normal);
+					
+					// TODO: Optimizar
+					if (puntoProyectado.distanciaA(primerVer) + puntoProyectado.distanciaA(segundoVer)
+						==
+						primerVer.distanciaA(segundoVer)
+						) 
+						{
+							return true;
+						}
+						
+				}
+
+			}
+		} catch (ArithmeticException e) {
+			// Un vértice del polígono coincide con el centro del circulo ?¿?¿
+			return true;
+		} 			
+		return false;
 	}
 	
 	/* (non-Javadoc)

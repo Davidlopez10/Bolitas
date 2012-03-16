@@ -221,24 +221,42 @@ public class EntidadPoligono extends Entidad {
 	/* (non-Javadoc)
 	 * @see Entidades.Entidad#hayColision(Entidades.Entidad)
 	 */
-	public boolean hayColision(Entidad entidad) throws EntidadDesconocidaException {
-		if (entidad instanceof EntidadPoligono) {
-			EntidadPoligono entPolig = (EntidadPoligono) entidad;
-			for (int i=0; i<this.getNumeroVertices();i++)
-				if (EntidadPoligono.contiene(entPolig, this.getVerticeAbsoluto(i)))
-					return true;
-			for (int i=0; i<entPolig.getNumeroVertices();i++)
-				if (EntidadPoligono.contiene(this, entPolig.getVerticeAbsoluto(i)))
-					return true;
-			return false;
+	public boolean hayColision(Entidad ent) throws EntidadDesconocidaException {
+		if (ent instanceof EntidadCirculo) {
+			return hayColision((EntidadCirculo) ent);
 		}
-		else if (entidad instanceof EntidadCirculo){
-			return entidad.hayColision(this);
+		else if (ent instanceof EntidadPoligono) {
+			return hayColision((EntidadPoligono) ent);
 		}
 		else {
-			throw new EntidadDesconocidaException("Imposible procesar colision con entidad desconocida" , entidad);
-		}
-
+			throw new EntidadDesconocidaException(ent);
+		}	
+	}
+	
+	/**
+	 * Devuelve si hay colision o no con una círculo
+	 * 
+	 * @param circulo Círculo con el que comprobar si hay colision o no
+	 * @return TRUE si colisina, false en otro caso.
+	 */
+	private boolean hayColision(EntidadCirculo circulo) {	
+		return circulo.hayColision(this);	
+	}
+	
+	/**
+	 * Devuelve si hay colision o no con un polígono	
+	 * 
+	 * @param polig Polígono con el que colisiona
+	 * @return TRUE si colisina, false en otro caso.
+	 */
+	private boolean hayColision(EntidadPoligono polig) {
+		for (int i=0; i<this.getNumeroVertices();i++)
+			if (EntidadPoligono.contiene(polig, this.getVerticeAbsoluto(i)))
+				return true;
+		for (int i=0; i<polig.getNumeroVertices();i++)
+			if (EntidadPoligono.contiene(this, polig.getVerticeAbsoluto(i)))
+				return true;
+		return false;
 	}
 	
 	/* (non-Javadoc)
