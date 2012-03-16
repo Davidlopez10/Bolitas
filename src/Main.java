@@ -38,7 +38,7 @@ public class Main {
 		ventana.setResizable(false);
 
 		// Creamos un escenario.
-		Escenario escenario = new Escenario(ventana, ANCHO, ALTO, 1000, Color.BLACK);
+		Escenario escenario = new Escenario(ventana, ANCHO, ALTO, Color.BLACK);
 		
 		ventana.pack();
 		ventana.setVisible(true);

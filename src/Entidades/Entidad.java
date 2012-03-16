@@ -363,7 +363,7 @@ public abstract class Entidad {
 	
 	public Entidad hayColision(java.util.Vector<Entidad> listaEntidades) {
 		for (int i=0; i<listaEntidades.size(); i++)
-			if (this.hayColision(listaEntidades.get(i)) {
+			if (this.hayColision(listaEntidades.get(i))) {
 				return listaEntidades.get(i);
 			}
 		return null;
