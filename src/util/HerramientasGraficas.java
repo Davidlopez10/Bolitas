@@ -25,7 +25,7 @@ public class HerramientasGraficas {
 		Matriz giro2 = Matriz.getMatriz2x2Giro(Math.PI/100);
 		
 		Vector2D vertice1 = new Vector2D(giro1.por(vector).suma(origen));
-		Vector2D vertice2 = new Vector2D(giro2.por(vector).suma(origen));;
+		Vector2D vertice2 = new Vector2D(giro2.por(vector).suma(origen));
 		
 		// Si la flecha es demasiado grande, no agrandamos más el tamaño de las líneas que forman la flecha.
 		if (destino.resta(origen).norma() > MAXIMA_NORMA_VECTOR) {
