@@ -2,6 +2,7 @@ package Entidades;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Vector;
 
 import util.HerramientasGraficas;
 
@@ -360,6 +361,14 @@ public abstract class Entidad {
 		return null;
 	}
 	
+	public Entidad hayColision(java.util.Vector<Entidad> listaEntidades) {
+		for (int i=0; i<listaEntidades.size(); i++)
+			if (this.hayColision(listaEntidades.get(i)) {
+				return listaEntidades.get(i);
+			}
+		return null;
+	}
+	
 	/**
 	 * Procesa la colision de la entidad con el borde X del escenario
 	 */
@@ -448,6 +457,8 @@ public abstract class Entidad {
 				+ velocidad + " \nAceleracion " + aceleracion + " \nColor "
 				+ colorEntidad + "\n Masa: " + this.masa);
 	}
+
+
 }
 
 

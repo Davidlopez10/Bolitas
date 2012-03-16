@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Vector;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -11,7 +12,6 @@ import Entidades.Entidad;
 import Exception.ColisionException;
 
 // TODO: Interfaz gráfica para insertar y eliminar objetos
-// TODO: Métodos para eliminar objetos
 
 /**
  * Esta clase implementa un escenario al que se pueden añadir entidades.
@@ -27,9 +27,7 @@ public class Escenario extends JComponent {
 	private int alto;
 	private int ancho;
 
-	private int maxEntidades;
-	private int numEntidades;
-	private Entidad[] listaEntidades;
+	private java.util.Vector<Entidad> listaEntidades = new java.util.Vector<Entidad>();
 
 	private Color colorFondo;
 	
@@ -41,15 +39,11 @@ public class Escenario extends JComponent {
 	 * @param ventana Ventana donde se mostrará el escenario
 	 * @param ancho ancho del escenario
 	 * @param alto alto del escenario
-	 * @param maxEntidades número máximo de entidades que caben en el escenario
 	 * @param colorFondo Color de fondo para el escenario)
 	 */
-	public Escenario(JFrame ventana, int ancho, int alto, int maxEntidades, Color colorFondo) {
+	public Escenario(JFrame ventana, int ancho, int alto, Color colorFondo) {
 		this.alto = alto;
 		this.ancho = ancho;
-		this.numEntidades = 0;
-		this.maxEntidades = maxEntidades;
-		this.listaEntidades = new Entidad[maxEntidades];
 
 		this.colorFondo = colorFondo;
 
@@ -81,16 +75,7 @@ public class Escenario extends JComponent {
 	 * @return número actual de entidades en el escenario
 	 */
 	public int getNumEntidades() {
-		return numEntidades;
-	}
-
-	/**
-	 * Devuelve el número máximo de entidades en el escenario
-	 * 
-	 * @return número máximo de entidades en el escenario
-	 */
-	public int getMaxEntidades() {
-		return maxEntidades;
+		return listaEntidades.size();
 	}
 
 	/**
@@ -100,25 +85,35 @@ public class Escenario extends JComponent {
 	 * @return TRUE si se insertó correctamente la entidad
 	 * @throws ColisionException Si se intentó insertar una entidad donde ya existía otra
 	 */
-	public boolean insertarEntidad(Entidad ent) throws ColisionException {
-		int i = 0;
+	public void insertarEntidad(Entidad ent) throws ColisionException {
 
-		if (ent.hayColision(listaEntidades, numEntidades) != null
+		if (ent.hayColision(listaEntidades) != null
 				|| ent.hayColisionX(0, ancho) || ent.hayColisionY( 0, alto))
 			throw new ColisionException(ent);
 
-		while (i < maxEntidades && listaEntidades[i] != null)
-			i++;
 
-
-		if (i == maxEntidades) {
-			return false;
-		} else {
-			listaEntidades[i] = ent;
-			numEntidades++;
-			return true;
-		}
-
+		listaEntidades.add(ent);
+	}
+	
+	/**
+	 * Elimina una entidad del escenario, por su índice.
+	 * 
+	 * @param i Índice de la entidad a eliminar
+	 * @return La entidad que se ha eliminado.
+	 * @throws ArrayIndexOutOfBoundsException Si el índice proporcionado está más alla de el número actual de entidades
+	 */
+	public Entidad eliminarEntidad(int i) throws ArrayIndexOutOfBoundsException{
+		return listaEntidades.remove(i);
+	}
+	
+	/**
+	 * Elimna una entidad del escenario, dada dicha entidad.
+	 * 
+	 * @param ent Entidad a eliminar
+	 * @return TRUE si se eliminó la entidad. FALSE si la entidad no estaba en el escenario.
+	 */
+	public boolean eliminarEntidad(Entidad ent) {
+		return listaEntidades.remove(ent);
 	}
 
 	/* (non-Javadoc)
@@ -131,8 +126,8 @@ public class Escenario extends JComponent {
 		g.fillRect(0, 0, ancho, alto);
 
 		// Entidades
-		for (int i = 0; i < numEntidades; i++) {
-			listaEntidades[i].pintar(g);
+		for (Entidad ent : listaEntidades) {
+			ent.pintar(g);
 		}
 	}
 
@@ -144,21 +139,23 @@ public class Escenario extends JComponent {
 	 */
 	public void calculaFisica(double dt) {
 		// Movimiento normal
-		for (int i = 0; i < numEntidades; i++)
-			listaEntidades[i].calcularNuevasPosiciones(dt);
+		for (Entidad ent : listaEntidades) {
+			ent.calcularNuevasPosiciones(dt);
+		}
+
 
 		// Cálculo colisiones
-		for (int i = 0; i < numEntidades; i++) {
+		for (int i = 0; i < listaEntidades.size(); i++) {
 
 			// Colisiones con los bordes
-			if (listaEntidades[i].hayColisionX(0, ancho))
-				listaEntidades[i].tratarColisionEscenarioX();
-			if (listaEntidades[i].hayColisionY(0, alto))
-				listaEntidades[i].tratarColisionEscenarioY();
+			if (listaEntidades.get(i).hayColisionX(0, ancho))
+				listaEntidades.get(i).tratarColisionEscenarioX();
+			if (listaEntidades.get(i).hayColisionY(0, alto))
+				listaEntidades.get(i).tratarColisionEscenarioY();
 			// Colisiones con el resto de entidades
-			for (int j = i + 1; j < numEntidades; j++) {
-				if (listaEntidades[i].hayColision(listaEntidades[j])) {
-					Entidad.trataColision(listaEntidades[i], listaEntidades[j]);
+			for (int j = i + 1; j < listaEntidades.size(); j++) {
+				if (listaEntidades.get(i).hayColision(listaEntidades.get(j))) {
+					Entidad.trataColision(listaEntidades.get(i), listaEntidades.get(j));
 				}
 			}
 		}
