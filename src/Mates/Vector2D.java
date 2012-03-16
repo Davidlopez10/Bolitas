@@ -5,18 +5,38 @@ import Exception.DimensionNoValidaException;
 public class Vector2D extends Vector{
 	
 	
+	/**
+	 * Construye un {@link Vector2D} a partir de 2 componentes especificadas.
+	 * 
+	 * @param componentes Componentes del vector
+	 * @throws DimensionNoValidaException Si se pasa un número de componentes distinto de 2
+	 */
 	public Vector2D (double ... componentes) throws DimensionNoValidaException {
 		super(componentes);
 		if (componentes.length != 2)
 			throw new DimensionNoValidaException("Un Vector2D tiene que tener dos componentes");	
 	}
 	
+	/**
+	 * Construye un {@link Vector2D} a partir de un {@link Vector} de dos componentes
+	 * 
+	 * @param vector {@link Vector} desde el que se construirá un {@link Vector2D}
+	 * @throws DimensionNoValidaException
+	 */
 	public Vector2D(Vector vector) throws DimensionNoValidaException {
 		super(vector.getDatos());
 		if (vector.getDimension() != 2)
 			throw new DimensionNoValidaException("No se puede crear un Vector2D a partir de un Vector que no tiene 2 componentes");
 	}
 	
+	/**
+	 * Construye un {@link Vector2D} a partir de un origen y un destino.
+	 * 
+	 * Constructor equivalente a {@link Vector#Vector(Vector, Vector)}
+	 * 
+	 * @param origen {@link Vector2D} Origen
+	 * @param destino {@link Vector2D} Destino
+	 */
 	public Vector2D(Vector2D origen, Vector2D destino) {
 		super(origen,destino);
 	}
@@ -86,11 +106,16 @@ public class Vector2D extends Vector{
 	
 	/**
 	 *  Devuelve la suma de dos vectores
+	 *  
 	 * @param v vector a sumar
 	 * @return Suma de los dos vectores
 	 * @throws DimensionNoValidaException si las dimensiones de los dos vectores no coinciden
 	 */
-	public Vector2D suma(Vector2D v) {	
+	public Vector2D suma(Vector v) throws DimensionNoValidaException {
+		if (v.getDimension() != 2) {
+			throw new DimensionNoValidaException();
+		}
+		
 		double[] vect = new double[2];
 		for (int i=0;i<this.getDimension();i++)
 			vect[i]=this.get(i)+v.get(i);
@@ -105,7 +130,11 @@ public class Vector2D extends Vector{
 	 * @throws DimensionNoValidaException si las dimensiones de los dos vectores no coinciden
 	 */
 	@Override
-	public Vector2D resta(Vector v) {	
+	public Vector2D resta(Vector v) throws DimensionNoValidaException {
+		if (v.getDimension() != 2) {
+			throw new DimensionNoValidaException();
+		}
+		
 		double[] vect = new double[2];
 		for (int i=0;i<this.getDimension();i++)
 			vect[i]=this.get(i)-v.get(i);
@@ -155,11 +184,15 @@ public class Vector2D extends Vector{
 	 * @param u sobre el que proyectar
 	 * @return nuevo Vector proyectado
 	 * @throws ArithmeticException Si el vector sobre el que proyectar es nulo.
+	 * @throws DimensionNoValidaException Si el vector pasado no tiene dos componentes.
 	 */
-	public Vector2D proyectarSobre(Vector2D u) throws ArithmeticException {
+	public Vector2D proyectarSobre(Vector u) throws IllegalArgumentException {
+		if (u.getDimension() != 2) {
+			throw new DimensionNoValidaException();
+		}
 		if (u.esCero())
 			throw new ArithmeticException("proyeccion sobre (0,...,0)");
-		return u.normalizar().mult(this.productoEscalar(u)/u.norma());
+		return new Vector2D(u.normalizar().mult(this.productoEscalar(u)/u.norma()));
 	}
 	
 	/**

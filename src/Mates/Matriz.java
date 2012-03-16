@@ -1,5 +1,6 @@
 package Mates;
 
+import Entidades.EntidadPoligono;
 import Exception.DimensionNoValidaException;
 
 /**
@@ -114,7 +115,7 @@ public class Matriz {
 	 * Devuelve la fila especficiada de una matriz
 	 * 
 	 * @param indice numero de la fila
-	 * @return Vector con las componentes de la primera fila
+	 * @return {@link Vector} con las componentes de la primera fila
 	 * @throws IndexOutOfBoundsException Si la matriz no tiene tantas filas o se especifica un indice negativo
 	 */
 	public Vector getFila(int indice) throws IndexOutOfBoundsException {
@@ -130,7 +131,7 @@ public class Matriz {
 	 * Setea una nueva fila de una matriz
 	 * 
 	 * @param indice indice de la fila a cambiar
-	 * @param fila Vector que ocupara la nueva fila
+	 * @param fila {@link Vector} que ocupara la nueva fila
 	 * @throws DimensionNoValidaException si la dimension del vector no coincide con la dimension que tienen los vectores fila de esa matriz
 	 * @throws IndexOutOfBoundsException si la matriz no tiene tantas filas 
 	 */
@@ -158,7 +159,7 @@ public class Matriz {
 	 * Devuelve la columna especficiada de una matriz
 	 * 
 	 * @param indice numero de la columna
-	 * @return Vector con las componentes de la columna especificada 
+	 * @return {@link Vector} con las componentes de la columna especificada 
 	 * @throws IndexOutOfBoundsException Si la matriz no tiene tantas filas o se especifica un indice negativo
 	 */
 	public Vector getColumna(int indice) throws IndexOutOfBoundsException {
@@ -174,7 +175,7 @@ public class Matriz {
 	 * Setea una nueva columna de una matriz
 	 * 
 	 * @param indice indice de la columna a cambiar
-	 * @param columna Vector que ocupara la nueva columna
+	 * @param columna {@link Vector} que ocupara la nueva columna
 	 * @throws DimensionNoValidaException si la dimension del vector no coincide con la dimension que tienen los vectores columna de esa matriz
 	 * @throws IndexOutOfBoundsException si la matriz no tiene tantas columnas 
 	 */
@@ -236,8 +237,8 @@ public class Matriz {
 	/**
 	 * Devuelve una nueva matriz suma de ésta con la dada.
 	 * 
-	 * @param m Matriz que habrá que sumar
-	 * @return Nueva matriz suma
+	 * @param m {@link Matriz} que habrá que sumar
+	 * @return Nueva {@link Matriz} suma
 	 * @throws DimensionNoValidaException Si la dimension de las matrices no coinciden
 	 */
 	public Matriz suma(Matriz m) throws DimensionNoValidaException {
@@ -258,7 +259,7 @@ public class Matriz {
 	 * Multiplica la matriz por un numero
 	 * 
 	 * @param n numero por el que multiplicamos la matriz
-	 * @return Nueva matriz multiplicada
+	 * @return Nueva {@link Matriz} multiplicada
 	 */
 	public Matriz por(double n) {
 		double nuevaMatriz[][] = new double[filas][columnas];
@@ -272,8 +273,8 @@ public class Matriz {
 	/**
 	 * Devuelve un nuevo vector producto de la matriz con el vector dado.
 	 * 
-	 * @param v Vector por el que hay que multiplicar la matriz
-	 * @return Nuevo vector producto
+	 * @param v {@link Vector} por el que hay que multiplicar la matriz
+	 * @return Nuevo {@link Vector} producto
 	 * @throws DimensionNoValidaException Si las dimensiones no son adecuadas
 	 */
 	public Vector por(Vector v) throws DimensionNoValidaException {
@@ -295,8 +296,8 @@ public class Matriz {
 	/**
 	 * Devuelve una nueva matriz producto de ésta con la dada.
 	 * 
-	 * @param m Matriz que por la que se ha de multiplicar
-	 * @return Nueva matriz multiplicada
+	 * @param m {@link Matriz} que por la que se ha de multiplicar
+	 * @return Nueva {@link Matriz} multiplicada
 	 * @throws DimensionNoValidaException Si las dimensiones no son adecuadas
 	 */
 	public Matriz por(Matriz m) throws DimensionNoValidaException {
@@ -318,7 +319,7 @@ public class Matriz {
 	 * Divide una matriz por un numero
 	 * 
 	 * @param n numero por el que dividir la matriz
-	 * @return nueva matriz dividida
+	 * @return nueva {@link Matriz} dividida
 	 * @throws ArithmeticException Si se intenta dividir por cero.
 	 */
 	public Matriz entre(double n) throws ArithmeticException {
@@ -348,7 +349,7 @@ public class Matriz {
 	 * ( -sin(alpha), cos(alpha) )
 	 * 
 	 * @param angulo Angulo de la matriz de giro
-	 * @return Nueva matriz de giro
+	 * @return Nueva {@link Matriz} de giro
 	 */
 	public static Matriz getMatriz2x2Giro(double angulo) {
 		while (angulo > 2 * Math.PI)

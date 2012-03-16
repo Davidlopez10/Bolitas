@@ -30,8 +30,8 @@ public class Vector {
 	/**
 	 * Construye un vector a partir de un punto origen y un punto destino.
 	 * 
-	 * @param p1 Origen
-	 * @param p2 Destino
+	 * @param p1 {@link Vector} Origen
+	 * @param p2 {@link Vector} Destino
 	 * 
 	 * @throws DimensionNoValidaException Si Origen y Destino tienen dimensiones disintas
 	 */
@@ -128,8 +128,8 @@ public class Vector {
 	
 	/**
 	 *  Devuelve la suma de dos vectores
-	 * @param v vector a sumar
-	 * @return Suma de los dos vectores
+	 * @param v {@link Vector} a sumar
+	 * @return {@link Vector} Suma de los dos vectores
 	 * @throws DimensionNoValidaException si las dimensiones de los dos vectores no coinciden
 	 */
 	public Vector suma(Vector v) throws DimensionNoValidaException {
@@ -145,8 +145,8 @@ public class Vector {
 	
 	/**
 	 *  Devuelve la suma de dos vectores
-	 * @param v vector a restar
-	 * @return Resta de los vectores
+	 * @param v {@link Vector} a restar
+	 * @return {@link Vector} Resta de los vectores
 	 * @throws DimensionNoValidaException si las dimensiones de los dos vectores no coinciden
 	 */
 	public Vector resta(Vector v) throws DimensionNoValidaException {
@@ -178,8 +178,8 @@ public class Vector {
 	
 	/**
 	 * Devuelve la distancia canónica hasta un punto 
-	 * @param Punto al que hallar la distancia
-	 * @return distancia entre los puntos
+	 * @param {@link Vector} (punto) al que hallar la distancia
+	 * @return distancia entre los vectores (puntos)
 	 * @throws DimensionNoValidaException Si el punto no tiene la misma dimension que el del objeto desde el que se invoca
 	 */
 	public double distanciaA(Vector v) throws DimensionNoValidaException {
@@ -193,9 +193,9 @@ public class Vector {
 	}
 	
 	/**
-	 * Devuelve la norma o módulo del vector
+	 * Devuelve la norma o módulo del {@link Vector}
 	 * 
-	 * @return norma o módulo del vector
+	 * @return norma o módulo del {@link Vector}
 	 */
 	public double norma() {
 		double norma=0;
@@ -205,9 +205,9 @@ public class Vector {
 	}
 	
 	/**
-	 * Devuelve el vector normalizado
+	 * Devuelve el {@link Vector} normalizado
 	 * 
-	 * @return nuevo Vector con la misma direccion y módulo 1.
+	 * @return nuevo {@link Vector} con la misma direccion y módulo 1.
 	 */
 	public Vector normalizar() {
 		try {
@@ -224,10 +224,10 @@ public class Vector {
 	}
 	
 	/**
-	 * Proyecta el vector sobre otro dado.
+	 * Proyecta el {@link Vector} sobre otro dado.
 	 * 
-	 * @param u sobre el que proyectar
-	 * @return nuevo Vector proyectado
+	 * @param {@link Vector} u sobre el que proyectar
+	 * @return nuevo {@link Vector} proyectado
 	 * @throws ArithmeticException Si el vector sobre el que proyectar es nulo.
 	 */
 	public Vector proyectarSobre(Vector u) throws ArithmeticException {
@@ -240,7 +240,7 @@ public class Vector {
 	 * Devuelve el vector multiplicado por un escalar
 	 * 
 	 * @param multiplicador Numero por el que multiplicas el vector
-	 * @return nuevo Vector multiplicado
+	 * @return nuevo {@link Vector} multiplicado
 	 */
 	public Vector mult(double multiplicador) {
 		double[] vect = new double[this.dimension];
@@ -254,7 +254,7 @@ public class Vector {
 	 * Devuelve el vector dividido por un escalar
 	 * 
 	 * @param divisor Numero por el que divides el vector
-	 * @return nuevo Vector dividido
+	 * @return nuevo {@link Vector} dividido
 	 * @throws ArithmeticException Si se intenta dividir por 0
 	 */
 	public Vector div(double divisor) throws ArithmeticException {
@@ -264,9 +264,9 @@ public class Vector {
 	}
 	
 	/**
-	 * Devuelve el producto escalar con otro vector
+	 * Devuelve el producto escalar con otro {@link Vector}
 	 * 
-	 * @param vect Otro vector con el que hacer el producto escalar
+	 * @param vect {@link Vector} con el que hacer el producto escalar
 	 * @return producto escalar entre los dos vectores
 	 * @throws DimensionNoValidaException Si los vectores no tienen la misma dimension
 	 */
@@ -284,7 +284,7 @@ public class Vector {
 	/**
 	 * Devuelve el ángulo formado entre dos vectores
 	 * 
-	 * @param vect Vector con el que formar el ángulo
+	 * @param vect {@link Vector} con el que formar el ángulo
 	 * @return el coseno del angulo entre los dos vectores
 	 * @throws DimensionNoValidaException Si los vectores no tienen la misma dimension
 	 * @throws ArithmeticException Si alguno de los dos vectores es el nulo
@@ -299,7 +299,7 @@ public class Vector {
 	 * @param dimension número de componentes del vector
 	 * @param limiteinf límite superior para las componentes
 	 * @param limitesup límite inferior para las componentes
-	 * @return nuevo Vector aleatorio.
+	 * @return nuevo {@link Vector} aleatorio.
 	 */
 	public static Vector getRandomVector(int dimension, double limiteinf, double limitesup) {
 		double datos[] = new double[dimension];

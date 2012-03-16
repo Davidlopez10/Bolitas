@@ -234,9 +234,9 @@ public class EntidadPoligono extends Entidad {
 	}
 	
 	/**
-	 * Devuelve si hay colision o no con una círculo
+	 * Devuelve si hay colision o no con una {@link EntidadCirculo}
 	 * 
-	 * @param circulo Círculo con el que comprobar si hay colision o no
+	 * @param circulo {@link EntidadCirculo} con la que comprobar si hay colision o no
 	 * @return TRUE si colisina, false en otro caso.
 	 */
 	private boolean hayColision(EntidadCirculo circulo) {	
@@ -244,9 +244,9 @@ public class EntidadPoligono extends Entidad {
 	}
 	
 	/**
-	 * Devuelve si hay colision o no con un polígono	
+	 * Devuelve si hay colision o no con una {@link EntidadPoligono}	
 	 * 
-	 * @param polig Polígono con el que colisiona
+	 * @param polig {@link EntidadPoligono} con el que colisiona
 	 * @return TRUE si colisina, false en otro caso.
 	 */
 	private boolean hayColision(EntidadPoligono polig) {
