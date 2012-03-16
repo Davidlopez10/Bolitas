@@ -544,8 +544,9 @@ public class EntidadPoligono extends Entidad {
 		else if (e instanceof EntidadPoligono) {
 			tratarColision((EntidadPoligono) e);
 		}
-		
-		throw new EntidadDesconocidaException(e);
+		else {
+		    throw new EntidadDesconocidaException(e);
+		}
 	}
 
 	
