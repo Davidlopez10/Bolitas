@@ -23,8 +23,8 @@ public class Main {
 
 	public static void main(String args[]) {
 		
-		int numPelotas = 100;
-		double radioPelotas = 0.5;
+		int numPelotas = 10;
+		double radioPelotas = 10;
 		int numExcepcionesProducidas = 0;
 		int entidadesNoSpawneadas = 0;
 		

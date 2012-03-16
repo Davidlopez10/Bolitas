@@ -305,7 +305,7 @@ public class EntidadCirculo extends Entidad {
 	/**
 	 * Trata colisiones de la entidad con polígonos
 	 * 
-	 * @param polig Polígono con el que tratar la colisión
+	 * @param polig Polígono con el que tratar la colision.
 	 */
 	private void tratarColision(EntidadPoligono polig) {
 		this.invertirVelocidadAngular();

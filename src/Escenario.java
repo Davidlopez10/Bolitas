@@ -155,7 +155,7 @@ public class Escenario extends JComponent {
 			// Colisiones con el resto de entidades
 			for (int j = i + 1; j < listaEntidades.size(); j++) {
 				if (listaEntidades.get(i).hayColision(listaEntidades.get(j))) {
-					Entidad.trataColision(listaEntidades.get(i), listaEntidades.get(j));
+					listaEntidades.get(i).tratarColision(listaEntidades.get(j));
 				}
 			}
 		}
@@ -207,12 +207,6 @@ public class Escenario extends JComponent {
 				sinProcesar--;
 				hayQueRenderizar = true;
 			}
-	
-			/*try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}*/
 	
 			if (hayQueRenderizar) {
 				fotogramas++;
