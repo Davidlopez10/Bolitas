@@ -5,6 +5,13 @@ import java.awt.Graphics;
 import Mates.Matriz;
 import Mates.Vector2D;
 
+/**
+ * Esta clase implementa una serie de métodos estáticos que ayudan a dibujar algunos elementos.
+ * 
+ * No debería instanciarse.
+ * 
+ * @author Jose Díaz
+ */
 public class HerramientasGraficas {
 
 	static final int SEGMENTOS_POR_VUELTA = 20;
@@ -15,9 +22,9 @@ public class HerramientasGraficas {
 	/**
 	 * Dibuja una flecha desde el punto origen, hasta destino
 	 * 
-	 * @param origen Origen de la flecha
-	 * @param destino Destino o fin de la flecha
-	 * @param g Gráfico donde se dibujará
+	 * @param origen {@link Vector2D} Origen de la flecha
+	 * @param destino {@link Vector2D} Destino o fin de la flecha
+	 * @param g {@link Graphics} donde se dibujará
 	 */
 	public static void dibujarFlecha(Vector2D origen, Vector2D destino, Graphics g) {	
 		Vector2D vector = destino.resta(origen).mult(0.9);
@@ -63,9 +70,9 @@ public class HerramientasGraficas {
 	/**
 	 * Dibuja un espiral de centro dado proporcional a la magnitud dada.
 	 * 
-	 * @param centro Centro de la espiral
+	 * @param centro {@link Vector2D} Centro de la espiral
 	 * @param magnitud Determinará cuán larga se dibujará la espiral.
-	 * @param g Gráfico donde se dibujará la espiral.
+	 * @param g {@link Graphics} fonde se dibujará la espiral.
 	 */
 	public static void dibujarEspiral(Vector2D centro, double magnitud, Graphics g) {
 		
