@@ -438,19 +438,15 @@ public abstract class Entidad {
 	 * Tras una colisión, corrige los modulos de los vectores velocidad de las entidades que colisionaron
 	 * para que la influencia de la masa se vea reflejada
 	 * 
-	 * @param ent1
-	 * @param ent2
+	 * @param ent1 {@link Entidad} que colisiona
+	 * @param ent2 {@link Entidad} que colisiona
 	 */
-	// 
 	private static void corregirModulosSegunMasa(Entidad ent1,Entidad ent2) {
-		/*double masaTotal = ent1.getMasa() + ent2.getMasa();
-		double moduloTotal = ent1.getVelocidad().norma() + ent2.getVelocidad().norma();
-		
-		double masa1Porcentaje = ent1.getMasa() / masaTotal;
-		double masa2Porcentaje = ent2.getMasa() / masaTotal;
-		
-		ent1.setVelocidad(ent1.getVelocidad().normalizar().mult(masa1Porcentaje * moduloTotal));
-		ent2.setVelocidad(ent2.getVelocidad().normalizar().mult(masa2Porcentaje * moduloTotal));*/
+		Vector2D vect1 = (ent1.getVelocidad().mult(Math.abs(ent1.getMasa() - ent2.getMasa())).suma(ent2.getVelocidad().mult(2*ent2.getMasa()))).div(ent1.getMasa() + ent2.getMasa());
+		Vector2D vect2 = (ent2.getVelocidad().mult(Math.abs(ent2.getMasa() - ent1.getMasa())).suma(ent1.getVelocidad().mult(2*ent1.getMasa()))).div(ent2.getMasa() + ent1.getMasa());
+
+		ent1.setVelocidad(vect1);
+		ent2.setVelocidad(vect2);
 	}
 	
 	/**
