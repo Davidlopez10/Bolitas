@@ -358,12 +358,12 @@ public abstract class Entidad {
 			HerramientasGraficas.dibujarFlecha(posicion, posicion.suma(aceleracion), g);
 		}
 		
-		if (mostrarVelocidadAngular) {
+		if (mostrarVelocidadAngular && velocidadAngular != 0) {
 			g.setColor(COLOR_VELOCIDAD_ANGULAR);
 			HerramientasGraficas.dibujarEspiral(posicion, velocidadAngular/10, g);
 		}
 		
-		if (mostrarAceleracionAngular) {
+		if (mostrarAceleracionAngular && aceleracionAngular != 0) {
 			g.setColor(COLOR_ACELERACION_ANGULAR);
 			HerramientasGraficas.dibujarEspiral(posicion, aceleracionAngular/10, g);
 		}
