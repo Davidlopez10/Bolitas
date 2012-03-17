@@ -218,38 +218,18 @@ public class EntidadPoligono extends Entidad {
 		super.pintar(g);
 	}
 
+
 	/* (non-Javadoc)
-	 * @see Entidades.Entidad#hayColision(Entidades.Entidad)
+	 * @see Entidades.Entidad#hayColision(Entidades.EntidadCirculo)
 	 */
-	public boolean hayColision(Entidad ent) throws EntidadDesconocidaException {
-		if (ent instanceof EntidadCirculo) {
-			return hayColision((EntidadCirculo) ent);
-		}
-		else if (ent instanceof EntidadPoligono) {
-			return hayColision((EntidadPoligono) ent);
-		}
-		else {
-			throw new EntidadDesconocidaException(ent);
-		}	
-	}
-	
-	/**
-	 * Devuelve si hay colision o no con una {@link EntidadCirculo}
-	 * 
-	 * @param circulo {@link EntidadCirculo} con la que comprobar si hay colision o no
-	 * @return TRUE si colisina, false en otro caso.
-	 */
-	private boolean hayColision(EntidadCirculo circulo) {	
+	protected boolean hayColision(EntidadCirculo circulo) {	
 		return circulo.hayColision(this);	
 	}
 	
-	/**
-	 * Devuelve si hay colision o no con una {@link EntidadPoligono}	
-	 * 
-	 * @param polig {@link EntidadPoligono} con el que colisiona
-	 * @return TRUE si colisina, false en otro caso.
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#hayColision(Entidades.EntidadPoligono)
 	 */
-	private boolean hayColision(EntidadPoligono polig) {
+	protected boolean hayColision(EntidadPoligono polig) {
 		for (int i=0; i<this.getNumeroVertices();i++)
 			if (EntidadPoligono.contiene(polig, this.getVerticeAbsoluto(i)))
 				return true;

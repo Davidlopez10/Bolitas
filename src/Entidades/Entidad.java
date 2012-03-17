@@ -395,7 +395,33 @@ public abstract class Entidad {
 	 * @return TRUE si hay colisión con la entidad.
 	 * @throws EntidadDesconocidaException Si no se ha implementado un método para detectar colisiones con tal tipo de entidad
 	 */
-	public abstract boolean hayColision(Entidad ent) throws EntidadDesconocidaException ;
+	public boolean hayColision(Entidad ent) throws EntidadDesconocidaException {
+		if (ent instanceof EntidadCirculo) {
+			return hayColision((EntidadCirculo) ent);
+		}
+		else if (ent instanceof EntidadPoligono) {
+			return hayColision((EntidadPoligono) ent);
+		}
+		else {
+			throw new EntidadDesconocidaException(ent);
+		}
+	}
+	
+	/**
+	 * Devuelve si hay colision o no con una {@link EntidadCirculo}
+	 * 
+	 * @param circulo {@link EntidadCirculo} con el que comprobar si hay colision o no
+	 * @return TRUE si colisina, false en otro caso.
+	 */
+	protected abstract boolean hayColision(EntidadCirculo circulo);
+	
+	/**
+	 * Devuelve si hay colision o no con una {@link EntidadPoligono}	
+	 * 
+	 * @param polig {@link EntidadPoligono} con el que colisiona
+	 * @return TRUE si colisina, false en otro caso.
+	 */
+	protected abstract boolean hayColision(EntidadPoligono polig);
 
 	/**
 	 * Detecta si hay una colision con alguna entidad en una lista de entidades o no
