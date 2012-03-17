@@ -553,37 +553,17 @@ public class EntidadPoligono extends Entidad {
 	}
 	
 	/* (non-Javadoc)
-	 * @see Entidades.Entidad#tratarColision(Entidades.Entidad)
+	 * @see Entidades.Entidad#tratarColision(Entidades.EntidadCirculo)
 	 */
-	public void tratarColision(Entidad e) throws EntidadDesconocidaException {
-		if (e instanceof EntidadCirculo) {
-			tratarColision((EntidadCirculo) e);
-		}
-		else if (e instanceof EntidadPoligono) {
-			tratarColision((EntidadPoligono) e);
-		}
-		else {
-		    throw new EntidadDesconocidaException(e);
-		}
-	}
-
-	
-	/**
-	 * Trata colisiones de la entidad con un círculo
-	 * 
-	 * @param circulo Círculo con el que tratar la colision
-	 */
-	private void tratarColision(EntidadCirculo circulo) {
+	protected void tratarColision(EntidadCirculo circulo) {
 		circulo.tratarColision(this);
 	}
 	
 	// TODO: Implementar convenientemente.
-	/**
-	 * Trata colisiones de la entidad con polígonos
-	 * 
-	 * @param polig Polígono con el que tratar la colisión
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#tratarColision(Entidades.EntidadPoligono)
 	 */
-	private void tratarColision(EntidadPoligono polig) {
+	protected void tratarColision(EntidadPoligono polig) {
 		try { 
 			this.invertirVelocidadAngular();
 			this.getVelocidad().invertirX();

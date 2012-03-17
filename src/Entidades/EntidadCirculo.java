@@ -29,7 +29,7 @@ public class EntidadCirculo extends Entidad {
 	 */
 	public EntidadCirculo(double radio, Vector2D posicion, Vector2D velocidad,
 			Vector2D aceleracion, Color color) {
-		this(radio,posicion,velocidad,aceleracion,0,0,0,0,color);
+		this(radio,posicion,velocidad,aceleracion,0,0,0,getMasa(radio),color);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class EntidadCirculo extends Entidad {
 	 */
 	public EntidadCirculo(double radio, Vector2D posicion, Vector2D velocidad,
 			Vector2D aceleracion, double masa, Color color) {
-		this(radio,posicion,velocidad,aceleracion,0,0,0,0,color);
+		this(radio,posicion,velocidad,aceleracion,0,0,0,getMasa(radio),color);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class EntidadCirculo extends Entidad {
 	public EntidadCirculo(double radio, Vector2D posicion, Vector2D velocidad,
 			Vector2D aceleracion, double posicionAngular,
 			double velocidadAngular, double aceleracionAngular, Color color) {
-		this(radio,posicion,velocidad,aceleracion,posicionAngular,velocidadAngular,aceleracionAngular,0,color);
+		this(radio,posicion,velocidad,aceleracion,posicionAngular,velocidadAngular,aceleracionAngular,getMasa(radio),color);
 	}
 	
 	/**
@@ -277,28 +277,12 @@ public class EntidadCirculo extends Entidad {
 		this.getVelocidad().invertirY();
 	}
 	
-	/* (non-Javadoc)
-	 * @see Entidades.Entidad#tratarColision(Entidades.Entidad)
-	 */
-	public void tratarColision(Entidad e) throws EntidadDesconocidaException {
-		if (e instanceof EntidadCirculo) {
-			tratarColision((EntidadCirculo) e);
-		}
-		else if (e instanceof EntidadPoligono) {
-			tratarColision((EntidadPoligono) e);
-		}
-		else {
-			throw new EntidadDesconocidaException(e);
-		}
-	}
 
-	
-	/**
-	 * Trata colisiones de la entidad con un círculo
-	 * 
-	 * @param circulo Círculo con el que tratar la colision
+
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#tratarColision(Entidades.EntidadCirculo)
 	 */
-	private void tratarColision(EntidadCirculo circulo) {
+	protected void tratarColision(EntidadCirculo circulo) {
 		try {
 			Vector2D choque1a2 = this.getPosicion().resta(circulo.getPosicion());
 			Vector2D choque2a1 = circulo.getPosicion().resta(this.getPosicion());
@@ -306,11 +290,12 @@ public class EntidadCirculo extends Entidad {
 			Vector2D velde1a2 = (this.getVelocidad().proyectarSobre(choque1a2));
 			Vector2D velde2a1 = (circulo.getVelocidad().proyectarSobre(choque2a1));
 
-			Vector2D Vel1Final = this.getVelocidad().suma(velde2a1).resta(velde1a2);
-			Vector2D Vel2Final = circulo.getVelocidad().suma(velde1a2).resta(velde2a1);
+			Vector2D vel1Final = this.getVelocidad().suma(velde2a1).resta(velde1a2);
+			Vector2D vel2Final = circulo.getVelocidad().suma(velde1a2).resta(velde2a1);
 
-			this.setVelocidad(Vel1Final);
-			circulo.setVelocidad(Vel2Final);
+			this.setVelocidad(vel1Final);
+			circulo.setVelocidad(vel2Final);
+
 		} catch (ArithmeticException e) {
 			// Podría pasar si un objeto colisiona consigo mismo...
 			System.out.println("Posíblemente un objeto colisionó consigo mismo (?)");
@@ -321,12 +306,10 @@ public class EntidadCirculo extends Entidad {
 	}
 	
 	// TODO: Implementar convenientemente.
-	/**
-	 * Trata colisiones de la entidad con polígonos
-	 * 
-	 * @param polig Polígono con el que tratar la colision.
+	/* (non-Javadoc)
+	 * @see Entidades.Entidad#tratarColision(Entidades.EntidadPoligono)
 	 */
-	private void tratarColision(EntidadPoligono polig) {
+	protected void tratarColision(EntidadPoligono polig) {
 		this.invertirVelocidadAngular();
 		this.getVelocidad().invertirX();
 		this.getVelocidad().invertirY();

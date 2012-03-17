@@ -44,10 +44,10 @@ public abstract class Entidad {
 	protected double velocidadAngular;
 	protected double aceleracionAngular;
 	
-	protected boolean mostrarVelocidad = false;
-	protected boolean mostrarAceleracion = false;
-	protected boolean mostrarVelocidadAngular = false;
-	protected boolean mostrarAceleracionAngular = false;
+	protected boolean mostrarVelocidad = true;
+	protected boolean mostrarAceleracion = true;
+	protected boolean mostrarVelocidadAngular = true;
+	protected boolean mostrarAceleracionAngular = true;
 
 	protected double masa;
 
@@ -418,7 +418,54 @@ public abstract class Entidad {
 	 * @param ent Otra entidad con la que la entidad llamada está colisionando.
 	 * @throws EntidadDesconocidaException Si no se ha implementado un método para tratar colisiones con tal tipo de entidad.
 	 */
-	public abstract void tratarColision(Entidad ent) throws EntidadDesconocidaException ;
+	public void tratarColision(Entidad e) throws EntidadDesconocidaException {
+		System.out.println("Tratar Colision con Entidades ha sido llamado :)");
+		if (e instanceof EntidadCirculo) {
+			tratarColision((EntidadCirculo) e);
+		}
+		else if (e instanceof EntidadPoligono) {
+			tratarColision((EntidadPoligono) e);
+		}
+		else {
+			throw new EntidadDesconocidaException(e);
+		}
+		
+		corregirModulosSegunMasa(this,e);
+	}
+	
+	
+	/**
+	 * Tras una colisión, corrige los modulos de los vectores velocidad de las entidades que colisionaron
+	 * para que la influencia de la masa se vea reflejada
+	 * 
+	 * @param ent1
+	 * @param ent2
+	 */
+	// 
+	private static void corregirModulosSegunMasa(Entidad ent1,Entidad ent2) {
+		/*double masaTotal = ent1.getMasa() + ent2.getMasa();
+		double moduloTotal = ent1.getVelocidad().norma() + ent2.getVelocidad().norma();
+		
+		double masa1Porcentaje = ent1.getMasa() / masaTotal;
+		double masa2Porcentaje = ent2.getMasa() / masaTotal;
+		
+		ent1.setVelocidad(ent1.getVelocidad().normalizar().mult(masa1Porcentaje * moduloTotal));
+		ent2.setVelocidad(ent2.getVelocidad().normalizar().mult(masa2Porcentaje * moduloTotal));*/
+	}
+	
+	/**
+	 * Trata colisiones de la entidad con una {@link EntidadCirculo}
+	 * 
+	 * @param circulo {@link EntidadCirculo} con el que tratar la colision
+	 */
+	protected abstract void tratarColision(EntidadCirculo circulo);
+	
+	/**
+	 * Trata colisiones de la entidad con una {@link EntidadPoligono}
+	 * 
+	 * @param polig {@link EntidadPoligono} con el que tratar la colision.
+	 */
+	protected abstract void tratarColision(EntidadPoligono poligono);
 	
 	/**
 	 * Detecta si hay una colision con alguna entidad en una lista de entidades o no
