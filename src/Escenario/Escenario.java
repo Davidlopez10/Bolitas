@@ -6,7 +6,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
-import java.util.Vector;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;

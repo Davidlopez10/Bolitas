@@ -2,12 +2,9 @@ package Entidades;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Vector;
 
 import util.HerramientasGraficas;
 
-import Exception.ColisionException;
-import Exception.DimensionNoValidaException;
 import Exception.EntidadDesconocidaException;
 import Mates.Vector2D;
 
@@ -465,6 +462,13 @@ public abstract class Entidad {
 		corregirModulosSegunMasa(this,e);
 	}
 	
+	/**
+	 * Intenta resolver una colisión, una vez se han modificado los vectores velocidad, haciendo que las entidades se muevan
+	 * hacia su vector velocidad. De esta forma se deshace la colisión entre ellas tarde o temprano (Los vectores deberían ser
+	 * de tal forma que las entidades se alejen entre sí)
+	 * 
+	 * Debería ser llamada exclusívamente desde {@link #tratarColision(Entidad)}
+	 */
 	private void resolverColision() {
 		System.out.print("|");
 		double dt = 0.1;

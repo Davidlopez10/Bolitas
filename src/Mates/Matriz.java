@@ -1,6 +1,5 @@
 package Mates;
 
-import Entidades.EntidadPoligono;
 import Exception.DimensionNoValidaException;
 
 /**

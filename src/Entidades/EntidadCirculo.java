@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Exception.DimensionNoValidaException;
-import Exception.EntidadDesconocidaException;
 import Mates.Vector2D;
 
 /**
