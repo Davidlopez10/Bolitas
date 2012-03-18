@@ -86,6 +86,15 @@ public class Escenario extends JComponent {
 	public int getNumEntidades() {
 		return listaEntidades.size();
 	}
+	
+	public Color getColorFondo() {
+		return colorFondo;
+	}
+	
+	public void setColorFondo(Color c) {
+		colorFondo = c;
+		this.dibuja();
+	}
 
 	/**
 	 * Inserta una nueva entidad en el escenario
