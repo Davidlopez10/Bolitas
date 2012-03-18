@@ -109,7 +109,7 @@ public class Escenario extends JComponent {
 				|| ent.hayColisionX(0, ancho) || ent.hayColisionY( 0, alto))
 			throw new ColisionException(ent);
 
-
+		ent.setEscenarioContenedor(this);
 		listaEntidades.add(ent);
 	}
 	
@@ -121,7 +121,9 @@ public class Escenario extends JComponent {
 	 * @throws ArrayIndexOutOfBoundsException Si el índice proporcionado está más alla de el número actual de entidades
 	 */
 	public Entidad eliminarEntidad(int i) throws ArrayIndexOutOfBoundsException{
-		return listaEntidades.remove(i);
+		Entidad entidadEliminada = listaEntidades.remove(i);
+		entidadEliminada.setEscenarioContenedor(null);
+		return entidadEliminada;
 	}
 	
 	/**
@@ -131,6 +133,7 @@ public class Escenario extends JComponent {
 	 * @return TRUE si se eliminó la entidad. FALSE si la entidad no estaba en el escenario.
 	 */
 	public boolean eliminarEntidad(Entidad ent) {
+		ent.setEscenarioContenedor(null);
 		return listaEntidades.remove(ent);
 	}
 

@@ -3,6 +3,7 @@ package entidades;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import escenario.Escenario;
 import exception.EntidadDesconocidaException;
 
 import mates.Vector2D;
@@ -36,6 +37,8 @@ public abstract class Entidad {
 	static final Color COLOR_VECTOR_ACELERACION = Color.RED;
 	static final Color COLOR_VELOCIDAD_ANGULAR = Color.BLUE;
 	static final Color COLOR_ACELERACION_ANGULAR = Color.RED;
+	
+	protected Escenario escenarioContenedor;
 	
 	protected Vector2D posicion;
 	protected Vector2D velocidad;
@@ -98,6 +101,24 @@ public abstract class Entidad {
 		this.colorEntidad = color;
 	}
 
+	/**
+	 * Devuelve el escenario en el que está contenida esta entidad. Null si no está en ningun escenario.
+	 * 
+	 * @return {link @Escenario} en el que está la entidad, o null si no está en ninguno.
+	 */
+	public Escenario getEscenarioContenedor() {
+		return escenarioContenedor;
+	}
+	
+	/**
+	 * Establece un nuevo escenario donde restá contenida la entidad.
+	 * 
+	 * @param esc {link @Escenario} donde está contenida la 
+	 */
+	public void setEscenarioContenedor(Escenario esc) {
+		escenarioContenedor = esc;
+	}
+	
 	/**
 	 * Devuelve la posicion de la entidad en píxeles
 	 * 
@@ -447,7 +468,7 @@ public abstract class Entidad {
 	 */
 	public void tratarColision(Entidad e) throws EntidadDesconocidaException {
 		System.out.println("Tratar Colision con Entidades ha sido llamado :)");
-		while (hayColision(e)) {
+		if (hayColision(e)) {
 			if (e instanceof EntidadCirculo) {
 				tratarColision((EntidadCirculo) e);
 			}
@@ -457,12 +478,9 @@ public abstract class Entidad {
 			else {
 				throw new EntidadDesconocidaException(e);
 			}
-			e.resolverColision();
-			this.resolverColision();
-			System.out.println("Corrigiendo colisión...");
 		}
-		
-		corregirModulosSegunMasa(this,e);
+		this.resolverColision();
+		e.resolverColision();
 	}
 	
 	/**
@@ -473,8 +491,7 @@ public abstract class Entidad {
 	 * Debería ser llamada exclusívamente desde {@link #tratarColision(Entidad)}
 	 */
 	private void resolverColision() {
-		System.out.print("|");
-		double dt = 0.1;
+		double dt = 1.0/Escenario.TICKS_Y_FPS_POR_SEGUNDO;
 		posicion = posicion.suma(velocidad.mult(dt));
 	}
 	
