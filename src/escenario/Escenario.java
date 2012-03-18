@@ -87,13 +87,13 @@ public class Escenario extends JComponent {
 		return listaEntidades.size();
 	}
 	
-	public Color getColorFondo() {
-		return colorFondo;
-	}
-	
-	public void setColorFondo(Color c) {
-		colorFondo = c;
-		this.dibuja();
+	/**
+	 * Devuelve un vector con las entidades que estan en el escenario.
+	 * 
+	 * @return Vector de entidades del escenario.
+	 */
+	public java.util.Vector<Entidad> getEntidades() {
+		return listaEntidades;
 	}
 
 	/**
