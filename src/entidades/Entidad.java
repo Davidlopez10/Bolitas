@@ -1,12 +1,15 @@
-package Entidades;
+package entidades;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
+import exception.EntidadDesconocidaException;
+
+import mates.Vector2D;
+
 import util.HerramientasGraficas;
 
-import Exception.EntidadDesconocidaException;
-import Mates.Vector2D;
+
 
 // TODO: Modificar colisiones para que usen masa
 // TODO: Añadir nombre único a cada clase.

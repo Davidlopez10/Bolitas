@@ -1,6 +1,6 @@
-package Exception;
+package exception;
 
-import Entidades.Entidad;
+import entidades.Entidad;
 
 /**
  * Excepcion generada cuando se debe tratar una excepcion según su tipo y no se puede

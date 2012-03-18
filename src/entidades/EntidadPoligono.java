@@ -1,13 +1,16 @@
-package Entidades;
+package entidades;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import Exception.DimensionNoValidaException;
-import Exception.PoligonoComplejoException;
-import Mates.Matriz;
-import Mates.Vector;
-import Mates.Vector2D;
+import exception.DimensionNoValidaException;
+import exception.PoligonoComplejoException;
+
+import mates.Matriz;
+import mates.Vector;
+import mates.Vector2D;
+
+
 
 public class EntidadPoligono extends Entidad {
 

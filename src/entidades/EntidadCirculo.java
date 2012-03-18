@@ -1,10 +1,10 @@
-package Entidades;
+package entidades;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import Exception.DimensionNoValidaException;
-import Mates.Vector2D;
+import mates.Vector2D;
+
 
 /**
  * Esta clase representa un tipo de entidad: el circulo.

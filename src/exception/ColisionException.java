@@ -1,6 +1,6 @@
-package Exception;
+package exception;
 
-import Entidades.Entidad;
+import entidades.Entidad;
 
 /**
  * Excepcion que se genera cuando vas a spawnear una entidad y entra en colision.

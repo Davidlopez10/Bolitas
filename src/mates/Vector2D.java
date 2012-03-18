@@ -1,6 +1,6 @@
-package Mates;
+package mates;
 
-import Exception.DimensionNoValidaException;
+import exception.DimensionNoValidaException;
 
 public class Vector2D extends Vector{
 	

@@ -1,4 +1,5 @@
-package Escenario;
+package escenario;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,12 +12,14 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import Entidades.Entidad;
-import Entidades.EntidadCirculo;
-import Exception.ColisionException;
-import Mates.Matriz;
-import Mates.Vector2D;
+import entidades.Entidad;
+import entidades.EntidadCirculo;
+import exception.ColisionException;
 
+import mates.Matriz;
+import mates.Vector2D;
+
+	
 // TODO: Interfaz gráfica para insertar y eliminar objetos
 
 /**
@@ -52,7 +55,7 @@ public class Escenario extends JComponent {
 		this.ancho = ancho;
 
 		this.colorFondo = colorFondo;
-
+		
 		setPreferredSize(new Dimension(ancho, alto));
 		ventana.getContentPane().add(this);
 	}

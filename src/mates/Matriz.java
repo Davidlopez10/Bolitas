@@ -1,6 +1,6 @@
-package Mates;
+package mates;
 
-import Exception.DimensionNoValidaException;
+import exception.DimensionNoValidaException;
 
 /**
  * Esta clase implementa matrices y sus operaciones básicas, y algunas operaciones con vectores

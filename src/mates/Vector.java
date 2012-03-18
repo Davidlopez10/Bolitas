@@ -1,6 +1,6 @@
-package Mates;
+package mates;
 
-import Exception.DimensionNoValidaException;
+import exception.DimensionNoValidaException;
 
 /**
  * Esta clase implementa Vectores de n componentes con sus operaciones matemáticas básicas.

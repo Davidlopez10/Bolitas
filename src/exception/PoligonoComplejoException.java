@@ -1,6 +1,6 @@
-package Exception;
+package exception;
 
-import Mates.Matriz;
+import mates.Matriz;
 
 /**
  * Excepcion generada cuando se da una matriz para definir un polígono de forma que

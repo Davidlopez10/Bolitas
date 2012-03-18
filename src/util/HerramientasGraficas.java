@@ -2,8 +2,9 @@ package util;
 
 import java.awt.Graphics;
 
-import Mates.Matriz;
-import Mates.Vector2D;
+import mates.Matriz;
+import mates.Vector2D;
+
 
 /**
  * Esta clase implementa una serie de métodos estáticos que ayudan a dibujar algunos elementos.

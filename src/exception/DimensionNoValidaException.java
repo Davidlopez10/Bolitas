@@ -1,4 +1,4 @@
-package Exception;
+package exception;
 
 /**
  * Excepcion generada cuando se intenta hacer una operacion entre vector y/o matrices y las dimensioens
