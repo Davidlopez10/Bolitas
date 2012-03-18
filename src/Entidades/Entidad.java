@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import util.HerramientasGraficas;
 
+import Exception.ColisionException;
 import Exception.DimensionNoValidaException;
 import Exception.EntidadDesconocidaException;
 import Mates.Vector2D;
@@ -446,17 +447,28 @@ public abstract class Entidad {
 	 */
 	public void tratarColision(Entidad e) throws EntidadDesconocidaException {
 		System.out.println("Tratar Colision con Entidades ha sido llamado :)");
-		if (e instanceof EntidadCirculo) {
-			tratarColision((EntidadCirculo) e);
-		}
-		else if (e instanceof EntidadPoligono) {
-			tratarColision((EntidadPoligono) e);
-		}
-		else {
-			throw new EntidadDesconocidaException(e);
+		while (hayColision(e)) {
+			if (e instanceof EntidadCirculo) {
+				tratarColision((EntidadCirculo) e);
+			}
+			else if (e instanceof EntidadPoligono) {
+				tratarColision((EntidadPoligono) e);
+			}
+			else {
+				throw new EntidadDesconocidaException(e);
+			}
+			e.resolverColision();
+			this.resolverColision();
+			System.out.println("Corrigiendo colisión...");
 		}
 		
 		corregirModulosSegunMasa(this,e);
+	}
+	
+	private void resolverColision() {
+		System.out.print("|");
+		double dt = 0.1;
+		posicion = posicion.suma(velocidad.mult(dt));
 	}
 	
 	
