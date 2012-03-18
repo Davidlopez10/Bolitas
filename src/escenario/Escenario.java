@@ -31,7 +31,8 @@ import mates.Vector2D;
 @SuppressWarnings("serial")
 public class Escenario extends JComponent {
 
-	public static final int TICKS_Y_FPS_POR_SEGUNDO = 60;
+	public static final int TICKS_POR_SEGUNDO = 600;
+	public static final int FPS = 60;
 	
 	private int alto;
 	private int ancho;
@@ -209,8 +210,10 @@ public class Escenario extends JComponent {
 		escenarioActivo = true;
 	
 		long ultimaVez = System.nanoTime();
-		double sinProcesar = 0;
-		double nanosegundosPorTick = 1000000000.0 / TICKS_Y_FPS_POR_SEGUNDO;
+		double ticksSinProcesar = 0;
+		double fotogramasSinProcesar = 0;
+		double nanosegundosPorTick = 1000000000.0 / TICKS_POR_SEGUNDO;
+		double nanosegundosPorFPS = 1000000000.0 / FPS;
 		int fotogramas = 0;
 		int ticks = 0;
 		long tempMostrarInfo = System.currentTimeMillis();
@@ -218,25 +221,28 @@ public class Escenario extends JComponent {
 		while (escenarioActivo) {
 			
 			long estaVez = System.nanoTime();
-			sinProcesar += (estaVez - ultimaVez) / nanosegundosPorTick;
+			ticksSinProcesar += (estaVez - ultimaVez) / nanosegundosPorTick;
+			fotogramasSinProcesar += (estaVez - ultimaVez) / nanosegundosPorFPS;
+			
 			ultimaVez = estaVez;
 			boolean hayQueRenderizar = false;
 			
-			while (sinProcesar > 0) {
+			while (ticksSinProcesar > 0) {
 				ticks++;
-				calculaFisica(1.0/TICKS_Y_FPS_POR_SEGUNDO);
-				sinProcesar--;
+				calculaFisica(1.0/TICKS_POR_SEGUNDO);
+				ticksSinProcesar--;
 				hayQueRenderizar = true;
 			}
 	
-			if (hayQueRenderizar) {
+			if (hayQueRenderizar && fotogramasSinProcesar > 0) {
 				fotogramas++;
+				fotogramasSinProcesar--;
 				dibuja();
 			}
 			
-			if (!hayQueRenderizar && sinProcesar <= 0) {
+			if (!hayQueRenderizar && ticksSinProcesar <= 0) {
 				try {
-					Thread.sleep(1000/TICKS_Y_FPS_POR_SEGUNDO);
+					Thread.sleep(1000/TICKS_POR_SEGUNDO);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -261,7 +267,7 @@ public class Escenario extends JComponent {
 		final int ALTO = 600;
 		final int NumExcepcionesHastaParar = 1000;
 		
-		int numPelotas = 0;
+		int numPelotas = 20;
 		double radioPelotas = 10;
 		int numExcepcionesProducidas = 0;
 		int entidadesNoSpawneadas = 0;
