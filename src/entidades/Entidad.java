@@ -10,11 +10,8 @@ import mates.Vector2D;
 
 import util.HerramientasGraficas;
 
-
-
 // TODO: Modificar colisiones para que usen masa
-// TODO: Añadir nombre único a cada clase.
-
+// TODO: Reparar colisiones (ver #tratarColision(Entidad,Entidad))
 /**
  * Esta clase abstracta define entidades para la clase Escenario.
  * 
@@ -48,10 +45,10 @@ public abstract class Entidad {
 	protected double velocidadAngular;
 	protected double aceleracionAngular;
 	
-	protected boolean mostrarVelocidad = true;
-	protected boolean mostrarAceleracion = true;
-	protected boolean mostrarVelocidadAngular = true;
-	protected boolean mostrarAceleracionAngular = true;
+	protected boolean mostrarVelocidad = false;
+	protected boolean mostrarAceleracion = false;
+	protected boolean mostrarVelocidadAngular = false;
+	protected boolean mostrarAceleracionAngular = false;
 
 	protected double masa;
 
@@ -466,21 +463,36 @@ public abstract class Entidad {
 	 * @param ent Otra entidad con la que la entidad llamada está colisionando.
 	 * @throws EntidadDesconocidaException Si no se ha implementado un método para tratar colisiones con tal tipo de entidad.
 	 */
-	public void tratarColision(Entidad e) throws EntidadDesconocidaException {
+	// TODO: Comprobar, conseguir que se ejecute UNA SOLA VEZ por colisión !!
+	@Deprecated
+	public void tratarColision(Entidad entidadColisionada) throws EntidadDesconocidaException {
 		System.out.println("Tratar Colision con Entidades ha sido llamado :)");
-		if (hayColision(e)) {
-			if (e instanceof EntidadCirculo) {
-				tratarColision((EntidadCirculo) e);
+		int n = 10;
+		double dt = 1.0/Escenario.TICKS_POR_SEGUNDO;
+		//this.calcularNuevasPosiciones(-dt);
+		//entidadColisionada.calcularNuevasPosiciones(-dt);
+		
+		for (Entidad ent : getEscenarioContenedor().getEntidades()) {
+			ent.calcularNuevasPosiciones(-n*dt);
+		}
+		/*if (this.hayColision(entidadColisionada)) {
+			throw new Error("WTF?");
+		}*/
+		// Tratamos la colisión
+		if (hayColision(entidadColisionada)) {
+			if (entidadColisionada instanceof EntidadCirculo) {
+				tratarColision((EntidadCirculo) entidadColisionada);
 			}
-			else if (e instanceof EntidadPoligono) {
-				tratarColision((EntidadPoligono) e);
+			else if (entidadColisionada instanceof EntidadPoligono) {
+				tratarColision((EntidadPoligono) entidadColisionada);
 			}
 			else {
-				throw new EntidadDesconocidaException(e);
+				throw new EntidadDesconocidaException(entidadColisionada);
 			}
 		}
-		this.resolverColision();
-		e.resolverColision();
+		for (Entidad ent : getEscenarioContenedor().getEntidades()) {
+			ent.calcularNuevasPosiciones(n*dt);
+		}
 	}
 	
 	/**
@@ -490,12 +502,15 @@ public abstract class Entidad {
 	 * 
 	 * Debería ser llamada exclusívamente desde {@link #tratarColision(Entidad)}
 	 */
+	// TODO: En pruebas
+	@Deprecated
 	private void resolverColision() {
-		double dt = 1.0/Escenario.TICKS_Y_FPS_POR_SEGUNDO;
+		double dt = 1.0/Escenario.TICKS_POR_SEGUNDO;
 		posicion = posicion.suma(velocidad.mult(dt));
 	}
 	
 	
+	// TODO: Revisar
 	/**
 	 * Tras una colisión, corrige los modulos de los vectores velocidad de las entidades que colisionaron
 	 * para que la influencia de la masa se vea reflejada
@@ -503,6 +518,7 @@ public abstract class Entidad {
 	 * @param ent1 {@link Entidad} que colisiona
 	 * @param ent2 {@link Entidad} que colisiona
 	 */
+	@Deprecated
 	private static void corregirModulosSegunMasa(Entidad ent1,Entidad ent2) {
 		Vector2D vect1 = (ent1.getVelocidad().mult(Math.abs(ent1.getMasa() - ent2.getMasa())).suma(ent2.getVelocidad().mult(2*ent2.getMasa()))).div(ent1.getMasa() + ent2.getMasa());
 		Vector2D vect2 = (ent2.getVelocidad().mult(Math.abs(ent2.getMasa() - ent1.getMasa())).suma(ent1.getVelocidad().mult(2*ent1.getMasa()))).div(ent2.getMasa() + ent1.getMasa());

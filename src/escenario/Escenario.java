@@ -14,6 +14,8 @@ import javax.swing.SwingUtilities;
 
 import entidades.Entidad;
 import entidades.EntidadCirculo;
+import entidades.EntidadPoligonoRegular;
+import entidades.EntidadRectangulo;
 import exception.ColisionException;
 
 import mates.Matriz;
@@ -31,7 +33,7 @@ import mates.Vector2D;
 @SuppressWarnings("serial")
 public class Escenario extends JComponent {
 
-	public static final int TICKS_POR_SEGUNDO = 600;
+	public static final int TICKS_POR_SEGUNDO = 2400;
 	public static final int FPS = 60;
 	
 	private int alto;
@@ -206,7 +208,6 @@ public class Escenario extends JComponent {
 	 * indefinidamente.
 	 */
 	public void accion() {
-	
 		escenarioActivo = true;
 	
 		long ultimaVez = System.nanoTime();
@@ -267,7 +268,7 @@ public class Escenario extends JComponent {
 		final int ALTO = 600;
 		final int NumExcepcionesHastaParar = 1000;
 		
-		int numPelotas = 20;
+		int numPelotas = 5;
 		double radioPelotas = 10;
 		int numExcepcionesProducidas = 0;
 		int entidadesNoSpawneadas = 0;
@@ -298,7 +299,7 @@ public class Escenario extends JComponent {
 		MatrizPuntos1 = MatrizPuntos1.por(10);
 		MatrizPuntos2 = MatrizPuntos2.por(10);
 	
-		/*try {
+		try {
 			escenario.insertarEntidad(new EntidadRectangulo(50, 70, new Vector2D(100,100), new Vector2D(0,0), new Vector2D(50, 50), 0,
 		    		0, 2, Color.GREEN));
 			escenario.insertarEntidad(new EntidadPoligonoRegular(4, 30, new Vector2D(
@@ -308,7 +309,7 @@ public class Escenario extends JComponent {
 			//escenario.insertarEntidad(new EntidadPoligono(MatrizPuntos2, new Vector2D(200,500), new Vector2D(650,400), new Vector2D(0,0),40.0,55.0,0.0, 0,Color.MAGENTA));
 		} catch (ColisionException e) {
 			System.out.println("La entidad" + e.getEntidad() + " no se pudo spawnear por colision.");
-		}*/
+		}
 	
 		Random generadorAleatorio = new Random();
 	

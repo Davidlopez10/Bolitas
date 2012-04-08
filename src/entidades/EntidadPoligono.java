@@ -23,6 +23,8 @@ public class EntidadPoligono extends Entidad {
 
 	private int n;
 	
+	// TODO: corregir esConcavo()
+	@Deprecated
 	private boolean concavo;
 
 	/**

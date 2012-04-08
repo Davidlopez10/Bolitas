@@ -15,10 +15,10 @@ import mates.Vector2D;
  */
 public class HerramientasGraficas {
 
-	static final int SEGMENTOS_POR_VUELTA = 20;
-	static final int MAXIMAS_VUELTAS_ESPIRAL = 10;
+	private static final int SEGMENTOS_POR_VUELTA = 20;
+	private static final int MAXIMAS_VUELTAS_ESPIRAL = 10;
 	
-	static final int TAMAÑO_FLECHA_VECTOR = 15;
+	private static final int TAMAÑO_FLECHA_VECTOR = 15;
 		
 	/**
 	 * Dibuja una flecha desde el punto origen, hasta destino
@@ -76,11 +76,12 @@ public class HerramientasGraficas {
 	 * @param g {@link Graphics} fonde se dibujará la espiral.
 	 */
 	public static void dibujarEspiral(Vector2D centro, double magnitud, Graphics g) {
-		
 		// Parametro de la curva en paramétricas. Empezamos en 2 Pi para no empezar pegados al centro de la entidad.
 		double t;
 		double incremento;
 		
+		
+		// Esto es necesario debido a la forma en la que hemos decidido que las entidades giran (a derecha (?))
 		magnitud = -magnitud;
 		
 		if (Math.abs(magnitud) > MAXIMAS_VUELTAS_ESPIRAL) {
@@ -116,8 +117,6 @@ public class HerramientasGraficas {
 			fin = fin.suma(centro);
 		}
 		fin = inicio.suma(fin.resta(inicio).mult(2));
-		dibujarFlecha(inicio,fin,g);
-		
-		
+		dibujarFlecha(inicio,fin,g);	
 	}
 }

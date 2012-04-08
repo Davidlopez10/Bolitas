@@ -8,7 +8,6 @@ import mates.Matriz;
 import mates.Vector2D;
 
 
-
 public class EntidadPoligonoRegular extends EntidadPoligono {
 	
 	private double radio;
